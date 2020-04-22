@@ -14,19 +14,21 @@ class Icon extends Component {
   handleMouseLeave = () => {
     this.setState({ isHovered: false });
   }
-  onMouseClick() {
-    this.props.activateFromParent(this.props.iconName, this.props.icon);
-  }
+  // onMouseClick = () => {
+  //   this.props.activateFromParent(this.props.iconName, this.props.icon);
+  // }
   render() {
     const amIActive = (this.props.active===this.props.iconName?"blue":"");
     return (
         <div
+          todo={this.props.iconName}
+          icon={this.props.icon}
           className="imgWrap"
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
-          onClick={this.onMouseClick.bind(this)}
+          // onClick={this.onMouseClick}
         >
-          <img src={this.props.icon} className={`Om-logo ${this.state.isHovered} ${amIActive}`} alt="logo"/>
+          <img src={this.props.icon} className={`Om-logo ${this.state.isHovered} ${amIActive}`} alt="logo" />
 
         </div>
     )

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Icon from './components/Icon.js';
 import Tictactoe from './components/tictactoe.js';
+import Knotscross from './components/knotscross.js';
 import './App.css';
 
 import logo from './logo.svg';
@@ -29,7 +30,7 @@ const iconsArr = [
   {
     key: 4,
     icon: lotusLogo,
-    iconName: 'lotusLogo'
+    iconName: 'lotus'
   },
   {
     key: 5,
@@ -48,45 +49,113 @@ class App extends Component {
     super()
     this.state = {
       isActive: 'none',
-      isActiveLogo: logo
+      isActiveLogo: logo,
+      activeComponent: <img src={logo}
+        className="App-logo" alt="logo"
+        />,
     }
   }
   activate = (symbol, symLogo) => {
-    // console.log(symbol);
+    console.log(symbol);
     this.setState({
       isActive: symbol,
       isActiveLogo: symLogo
     })
   }
 
-  activeApp() {
-    const appDisplay =
-    (this.state.isActive==='tictactoe' ?
-      <Tictactoe /> :
-      <img src={this.state.isActiveLogo}
-        className="App-logo" alt="logo"
-      />)
-    return appDisplay
+
+  // switch(expression) {
+  //   case x:
+  //     // code block
+  //     break;
+  //   case y:
+  //     // code block
+  //     break;
+  //   default:
+  //     // code block
+  // }
+
+  // activeApp() {
+  //   // const appDisplay =
+  //   var comp;
+  //   switch (this.state.isActive) {
+  //     case 'tictactoe':
+  //       comp = <Tictactoe />;
+  //       break;
+  //     case 'hamsa':
+  //       comp = <Knotscross />;
+  //       break;
+  //     default:
+  //       comp = <img src={this.state.isActiveLogo}
+  //         className="App-logo" alt="logo"
+  //       />
+  //       break;
+  //   }
+    
+  //   this.setState({
+  //     activeComponent: comp
+      
+  //   })
+    
+  //   // (this.state.isActive==='tictactoe' ?
+  //   //   <Tictactoe /> :
+  //   //   <img src={this.state.isActiveLogo}
+  //   //     className="App-logo" alt="logo"
+  //   //   />)
+  //   // (this.state.isActive==='hamsa' ?
+  //   //    :
+  //   //   <img src={this.state.isActiveLogo}
+  //   //     className="App-logo" alt="logo"
+  //   //   />)
+      
+  //   // return appDisplay
+  // }
+  onClick = (e) => {
+    const symLogo = e.target.getAttribute("icon")
+    this.setState({isActiveLogo: symLogo})
+    const todo = e.target.getAttribute("todo")
+    // console.log('clicked: ', todo)
+    // console.log('e.target: ', e.target)
+    let comp;
+    switch (todo) {
+      case 'tictactoe':
+        comp = <Tictactoe />;
+        break;
+      case 'hamsa':
+        comp = <Knotscross />;
+        break;
+      default:
+        comp = <img src={symLogo}
+          className="App-logo" alt="logo"
+        />
+        break;
+    }
+    // console.log('set activeComponent:', todo)
+    this.setState({
+      activeComponent: comp,
+      isActive: todo,
+      
+    })
   }
 
   render() {
-    const appDisplay = this.activeApp();
+    // const appDisplay = this.activeApp();
     return (
       <div className="App">
-          <div className="Om-header">
+          <div onClick={this.onClick} className="Om-header">
             {iconsArr.map((icon, i) => (
               <Icon
                 key={i}
                 icon={iconsArr[i].icon}
                 // icon={Object.values(iconsArr[i].icon)}
-                activateFromParent={this.activate}
+                // activateFromParent={this.activate}
                 iconName={iconsArr[i].iconName}
                 active={this.state.isActive}
               />
             ))}
           </div>
         <header className="App-header">
-          {appDisplay}
+          {this.state.activeComponent}
           
           <p>
             Edit <code>src/App.js</code> and save to reload.
