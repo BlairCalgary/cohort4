@@ -1,0 +1,67 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.Om-logo {
+  height: 25vmin;
+  pointer-events: none;
+}
+
+.imgWrap {
+  padding: 1rem;
+}
+
+.dodgerBlue {
+  filter: invert(57%) sepia(68%) saturate(5269%) hue-rotate(192deg) brightness(101%) contrast(101%);
+}
+.blue {
+  filter: invert(8%) sepia(100%) saturate(7259%) hue-rotate(248deg) brightness(98%) contrast(143%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+  .Om-logo {
+    animation: App-logo-spin infinite 11s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Om-header {
+  background-color: whitesmoke;
+  /* min-height: 100vh; */
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* font-size: calc(10px + 2vmin); */
+  /* color: white; */
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

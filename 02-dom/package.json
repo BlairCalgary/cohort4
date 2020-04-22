@@ -8,7 +8,7 @@
         "testcov": "jest --coverage",
         "test1": "jest src/02-dom",
         "test1cov": "jest src/02-dom --coverage",
-        "testfile": "jest src/02-dom/scripts/lfsplay.test.js"
+        "testfile": "jest src/02-dom/scripts/lfsplay.test.js"        
     },
     "keywords": [],
     "author": "",
@@ -17,7 +17,11 @@
         "@babel/cli": "^7.0.0",
         "@babel/preset-env": "^7.0.0",
         "jest": "^24.9.0",
+        "jest-environment-jsdom-fourteen": "^1.0.1",
         "node-fetch": "^2.6.0",
         "whatwg-fetch": "^3.0.0"
+    },
+    "jest": {
+        "testEnvironment": "jest-environment-jsdom-fourteen"
     }
 }

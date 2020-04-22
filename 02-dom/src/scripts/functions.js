@@ -2,10 +2,9 @@ const functions = {
 
     addLi: () => {
         var node = document.createElement("li");
-        // var textnode = document.createTextNode("Append Item");
         node.textContent = `Append Item`;
-        // node.appendChild(textnode);
-        document.getElementById('myOL').appendChild(node);
+        var targetelement = document.getElementById('myOL');
+        targetelement.insertAdjacentElement('beforeend', node);
     },
     insertLi: () => {
         var node = document.createElement("li");

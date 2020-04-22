@@ -29,29 +29,29 @@ let i = 0;
 const buildNode = () => {
     // Create card div with title
     const node = document.createElement("DIV");
-    node.setAttribute("class", "cards");
+    node.className = 'cards';
     const span = document.createElement("span");
     node.appendChild(span);
-    span.setAttribute("id", "cardTitle");
+    span.id = 'cardTitle';
     span.textContent = `Card ${i}`;
     node.appendChild(document.createElement("br"));
     // Create beforeNode button node
     const beforeNode = document.createElement("button");
-    beforeNode.setAttribute("id", "addBefore");
-    beforeNode.setAttribute("class", "cardBtn");
+    beforeNode.id = 'addBefore';
+    beforeNode.className = 'cardBtn';
     beforeNode.textContent = `Add Before`;
     node.appendChild(beforeNode);
     // Create afterNode button node
     const afterNode = document.createElement("button");
-    afterNode.setAttribute("id", "addAfter");
-    afterNode.setAttribute("class", "cardBtn");
+    afterNode.id = 'addAfter'
+    afterNode.className = 'cardBtn';
     afterNode.textContent = `Add After`;
     node.appendChild(afterNode);
     node.appendChild(document.createElement("br"));
     // Create deleteNode button node
     const deleteNode = document.createElement("button");
-    deleteNode.setAttribute("id", "deleteCard");
-    deleteNode.setAttribute("class", "cardBtn");
+    deleteNode.id = 'deleteCard';
+    deleteNode.className = 'cardBtn';
     deleteNode.textContent = `Delete`;
     node.appendChild(deleteNode);
     return node;
