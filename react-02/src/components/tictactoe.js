@@ -23,37 +23,13 @@ function calculateWinner(squares) {
   return null;
 }
 
-// Disables all squares:
-// function disableSquares() {
-//   const dis = document.getElementsByClassName("square");
-//   let t;
-//   for (t=0; t<dis.length; t++) {
-//     dis[t].disabled = true;
-//   }
-// }
-// Enables all squares
-// function enableSquares() {
-//   const dis = document.getElementsByClassName("square");
-//   let t;
-//   for (t=0; t<dis.length; t++) {
-//     dis[t].disabled = false;
-//   }
-// }
 
 function Square(props) {
-  if (props.humanTurn === null) {
-    return (
-      <button id={props.index} className="square" >
-        {props.value}
-      </button>
-    )
-  } else {
-    return (
-      <button id={props.index} className="square" onClick={props.onClick} >
-        {props.value}
-      </button>
-    )
-  };
+  return (
+    <button id={props.index} className="square" onClick={props.onClick} >
+      {props.value}
+    </button>
+  )
 }
 
 class Board extends React.Component {
@@ -96,7 +72,6 @@ class Board extends React.Component {
 function minimax(board, depth, isMaximizing, myState) { //board, depth, isMaximizing, state
   let result = calculateWinner(board);
   if (result !== null) {
-    // console.log('result: ', result)
     return myState.scores[result];
   }
   if (isMaximizing) {
@@ -152,21 +127,8 @@ const bestMove = (board, myState) => { // board state , this.state
       }
     }
   }
-
   return move;
 }
-
-
-// function handleClick(i, historyState, xIsNext, stepState, clickSetState) {
-//   const history = historyState.slice(0, stepState + 1);
-//   const current = history[history.length - 1];
-//   const squares = current.squares.slice();
-//   if (calculateWinner(squares) || squares[i]) {
-//       return;
-//   }
-//   squares[i] = xIsNext ? 'X' : 'O';
-//   Tictactoe.clickSetState(history, squares);
-// }
 
 
 class Tictactoe extends React.Component {
@@ -190,19 +152,8 @@ class Tictactoe extends React.Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(i) {
-    console.log('handleClick triggered')
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
-    const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
-      return;
-    }
+  doTheMove(squares, i, history) {
     squares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.clickSetState(history, squares);
-  }
-
-  clickSetState(history, squares) {
     this.setState({
       history: history.concat([{
         squares: squares,
@@ -213,7 +164,17 @@ class Tictactoe extends React.Component {
     });
   }
 
+  async handleClick(i) {
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    await this.doTheMove(squares, i, history)
+    await this.nextTurn()
 
+  }
 
   jumpTo(step) {
     this.setState({
@@ -222,46 +183,16 @@ class Tictactoe extends React.Component {
     })
   }
 
-  // bestMove(board) { // board state , this.state
-  //   let bestScore = -Infinity;
-  //   let move;
-  //   let j;
-  //   for (j = 0; j < 9; j++) {
-  //     if (board[j] === null) {
-  //       board[j] = this.state.ai;
-  //       let score = minimax(board, 0, false, this.state); //false
-  //       board[j] = null;
-  //       if (score > bestScore) {
-  //         bestScore = score;
-  //         move = j;
-  //       }
-  //     }
-  //   }
-  //   const randomNumber = Math.floor((Math.random() * 5));
-  //   console.log('randomNumber: ', randomNumber);
-  //   if (randomNumber===0) {
-  //   }
 
-  //   return move;
-  // }
-
-  nextTurn(board) {
+  nextTurn() {
+    const history = this.state.history;
+    const board = history[history.length - 1];
     const squares = board.squares.slice();
     var theMove = bestMove(squares, this.state);
-    this.handleClick(theMove);
+    this.doTheMove(squares, theMove, history)
   }
 
-  // async nextTurn(board) { 
-  //   disableSquares();
-  //   await new Promise(r => setTimeout(r, 250));
-  //   enableSquares();
-  //   const squares = board.squares.slice();
-  //   var theMove = bestMove(squares, this.state);
-  //   this.handleClick(theMove);
-  // }
-
   pickStart() {
-    // disableSquares();
     return (
       <div>
         Starting Player:<br></br>
@@ -273,7 +204,6 @@ class Tictactoe extends React.Component {
           }}>Squishy</button>
         <button
           onClick={() => {
-            // console.log('in robot start.');
             this.setState({
               humanTurn: false,
               ai: 'X',
@@ -289,6 +219,48 @@ class Tictactoe extends React.Component {
     )
   }
 
+
+  robotStart() {
+    this.setState({
+      humanTurn: false,
+      ai: 'X',
+      human: 'O',
+      scores: {
+        'X': 10,//-10
+        'O': -10,//10
+        'Tie': 0
+      }
+    })
+    this.nextTurn()
+  }
+
+  squishyOrRobot() {
+    let response;
+    if (this.state.humanTurn === null) {
+      response = 
+        <div>
+          Starting Player:<br></br>
+          <button
+            onClick={() => {
+              this.setState({
+                humanTurn: true,
+              })
+            }}>Squishy</button>
+          <button
+            onClick={() => this.robotStart()}
+          >Robot</button>
+        </div>
+        
+    } else {
+      response = 
+        <div>
+          <div>Squishy: {this.state.human}</div>
+          <div>Robot: {this.state.ai}</div>
+        </div>
+      
+    }
+    return response
+  }
   getChooseStatus() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
@@ -303,22 +275,33 @@ class Tictactoe extends React.Component {
         choose = this.pickStart();
       } else {
         if (humanTurn === false) {
+
           this.nextTurn(current)
         }
         status = 'Squishy: ' + this.state.human
         status2 = 'Robot: ' + this.state.ai
       }
     }
-    console.log('in getChooseStatus')
     return [status, choose, status2]
   }
 
-  render() {
-    const [status, choose, status2] = this.getChooseStatus()
+  winnerDisplay() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
+    const winner = calculateWinner(current.squares);
+    let status = '';
+    if (winner) {
+      status = <div><br></br><div>Winner: {winner}</div></div>
+    
+    }
+    return status
+  }
 
-
+  render() {
+    const history = this.state.history;
+    const current = history[this.state.stepNumber];
+    const squishyRobot = this.squishyOrRobot()
+    const winnerDisplay = this.winnerDisplay()
     return (
       <div className="game">
         <div className="game-board">
@@ -328,17 +311,13 @@ class Tictactoe extends React.Component {
             humanTurn={this.state.humanTurn} />
         </div>
         <div className="game-info">
-          <div>{choose}</div>
-          <div>{status}</div>
-          <div>{status2}</div>
+          <div>{squishyRobot}</div>
+          <div>{winnerDisplay}</div>
         </div>
       </div>
     );
   }
 }
-
-// ========================================
-
 
 export default Tictactoe;
 
