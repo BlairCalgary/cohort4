@@ -139,7 +139,7 @@ test('test delete city', () => {
     expect(cont.cities[0].name).toBe('Edmonton');
 });
 
-// reload 7 records from file
+// reload 3 records from file
 test('reload data', async () => {
     const loadResp = await cityFetch.load();
     expect(loadResp).toBe('<h1>EvolveU test</h1> <h2>7 records Loaded</h2>');
@@ -177,7 +177,7 @@ test('read a response', async () => {
     expect(resp[0].name).toBe('Sudbury');
 });
 
-// read all (8 records)
+// read all (3 records)
 test('return all data', async () => {
     await cityFetch.load();
     const resp = await cityFetch.all();
@@ -214,6 +214,14 @@ test('update object', async () => {
     const respNew = await cityFetch.read(key);
     // console.log(`Second read fetch: `, respNew[0].population);
     expect(respNew[0].population).toBe('4000');
+    const data2 = {
+        "key": "1",
+        "name": "Calgary",
+        "latitude": "51",
+        "longitude": "-114",
+        "population": "1285711"
+    };
+    await cityFetch.update(data2);
 });
 
 // save file

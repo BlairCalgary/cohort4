@@ -26,34 +26,60 @@ function addAcctCard(obj) {
     let childNode2 = document.createElement("div");
     childNode2.className = 'leftCityCard';
     
-    let spanNode = document.createElement("span");
+    let spanNode = document.createElement("strong");
     spanNode.textContent = obj.name;
     childNode2.appendChild(spanNode);
 
     let buttonNode = document.createElement("button");
-    buttonNode.className = 'btn';
-    buttonNode.textContent = 'Show';
+    buttonNode.className = 'trash';
+    // buttonNode.textContent = 'Show';
     childNode2.appendChild(buttonNode);
 
     childNode.appendChild(childNode2);
 
+    let middleDiv = document.createElement("div");
+
+    let settlementEl = document.createTextNode("Settlement: " + obj.howBig())
+    middleDiv.appendChild(settlementEl)
+    let settlementBreak = document.createElement("br");
+    middleDiv.appendChild(settlementBreak)
+
+    let latElement = document.createTextNode("Latitude: " + obj.latitude)
+    middleDiv.appendChild(latElement);
+    let latBreak = document.createElement("br");
+    middleDiv.appendChild(latBreak);
+    let longElement = document.createTextNode("Longitude: " + obj.longitude)
+    middleDiv.appendChild(longElement)
+    let breakElement2 = document.createElement("br");
+    middleDiv.appendChild(breakElement2)
+    let popElement = document.createTextNode("Population: " + obj.population)
+    middleDiv.appendChild(popElement)
+    let breakElement3 = document.createElement("br");
+    middleDiv.appendChild(breakElement3)
+    
+
+    childNode.appendChild(middleDiv)
+
     let childNode3 = document.createElement("div");
     childNode3.className = 'rightCityCard';
 
-    let buttonNode2 = document.createElement('button');
-    buttonNode2.className = 'btn';
-    buttonNode2.textContent = 'Move In';
-    childNode3.appendChild(buttonNode2);
-    
+    let textNode = document.createTextNode("Migration:")
+    childNode3.appendChild(textNode)
+
     let input = document.createElement('input');
     input.setAttribute('id','moveInOut'+obj.key);
     input.setAttribute('type','number');
     input.className = 'moveInOut';
     childNode3.appendChild(input);
 
+    let buttonNode2 = document.createElement('button');
+    buttonNode2.className = 'smallbtn';
+    buttonNode2.textContent = '+';
+    childNode3.appendChild(buttonNode2);
+    
     let buttonNode3 = document.createElement('button');
-    buttonNode3.className = 'btn';
-    buttonNode3.textContent = 'Move Out';
+    buttonNode3.className = 'smallbtn';
+    buttonNode3.textContent = '-';
     childNode3.appendChild(buttonNode3);
 
     childNode.appendChild(childNode3);
@@ -99,11 +125,18 @@ function newKey() {
 }
 
 async function addCity() {
+    (cityName.value==="" ? cityName.classList.add('userInput') :'');
+    (lat.value==="" ? lat.classList.add('userInput') :'');
+    (long.value==="" ? long.classList.add('userInput') :'');
+    (pop.value==="" ? pop.classList.add('userInput') :'');
+    
+
     if (cityName.value==="" ||
         lat.value==="" ||
         long.value==="" ||
         pop.value==="") {
             console.log("Values need to be non-zero.")
+
         } else {
         const cityObj = {};
         cityObj.key = newKey();
@@ -122,6 +155,8 @@ async function addCity() {
         lat.value = "";
         long.value = "";
         pop.value = "";
+        clearDisplay();
+        
     }
 }
 
@@ -157,6 +192,7 @@ async function fetchCapital(city){
     lat.value = resp[0].latlng[0];
     long.value = resp[0].latlng[1];
     pop.value = resp[0].population;
+    clearDisplay();
 }
 
 // rebuildCards();
@@ -174,7 +210,7 @@ function moveOutCity(num, city) {
                 cityFetch.update(controller.cities[keyCount]);
                 // console.log(num+' people move out from '+city);
                 updatePage();
-                clearDisplay();
+                // clearDisplay();
             }
         }
         
@@ -191,7 +227,7 @@ function moveInCity(num, city) {
                 cityFetch.update(controller.cities[keyCount]);
                 // console.log(num+' people move in from '+city);
                 updatePage();
-                clearDisplay();
+                // clearDisplay();
             }
         }
 
@@ -200,55 +236,89 @@ function moveInCity(num, city) {
     }
 }
 
-
-
 rightPanel.addEventListener('click', ((e) => {
     switch(e.target.textContent) {
-        case 'Show':
-            const name = e.target.previousSibling.textContent
-            showCity(name);
-            break;
-        case 'Move Out':
-            const varMoveOut = e.target.previousSibling.value;
+        // case 'Show':
+        //     const name = e.target.previousSibling.textContent
+        //     showCity(name);
+        //     break;
+        case '-':
+            const varMoveOut = e.target.previousSibling.previousSibling.value;
             const varCity = e.target.parentNode.parentNode.childNodes[0].childNodes[0].textContent;
             moveOutCity(varMoveOut, varCity);
+            clearDisplay();
             break;
-        case 'Move In':
-            const varMoveIn = e.target.nextSibling.value;
+        case '+':
+            const varMoveIn = e.target.previousSibling.value;
             const varCityIn = e.target.parentNode.parentNode.childNodes[0].childNodes[0].textContent;
             moveInCity(varMoveIn, varCityIn);
+            clearDisplay();
             break;
+    }
+    if (e.target.className==='trash') {
+        let targetCity = e.target.parentNode.childNodes[0].textContent
+        confirmDelete(targetCity);
+        // alert('Delete ' + targetCity +'?')
     }
 }));
 
+function confirmDelete(City) {
+    const confirmDelete = confirm("Delete " + City +"?");
+    if (confirmDelete) {
+        for (const keyCount in controller.cities) {
+            if (controller.cities[keyCount].name===City) {
+                const displayKey = controller.cities[keyCount].key;
+                cityFetch.delete(displayKey);
+                controller.deleteCity(displayKey);
+                // console.log(controller.cities[keyCount].name, City);
+                
+            } 
+        }
+        
+        clearDisplay();
+
+        updatePage();
+        
+    }
+}
+
 function clearDisplay() {
-    displayCityOutput.textContent = "";
-    displayLatOutput.textContent = "";
-    displayLongOutput.textContent = "";
-    displayPopOutput.textContent = "";
-    displayKeyOutput.textContent = "";
-    displayHemOutput.textContent = "";
-    displaySetOutput.textContent = "";
+    cityName.classList.remove('userInput');
+    lat.classList.remove('userInput');
+    long.classList.remove('userInput');
+    pop.classList.remove('userInput');
 };
+cityName.addEventListener('change', (() => {
+    cityName.classList.remove('userInput');
+}));
+lat.addEventListener('change', (() => {
+    lat.classList.remove('userInput');
+}));
+long.addEventListener('change', (() => {
+    long.classList.remove('userInput');
+}));
+pop.addEventListener('change', (() => {
+    pop.classList.remove('userInput');
+}));
 
 randomCity.addEventListener('click', (() => {
     const rando = Math.floor(Math.random() * capitals.capitals.length)
     fetchCapital(capitals.capitals[rando]);
 }));
 
-displayDelCity.addEventListener('click', (() => {
-    if (!displayKeyOutput.textContent==``) {
-        cityFetch.delete(displayKeyOutput.textContent);
-        controller.deleteCity(displayKeyOutput.textContent);
+// displayDelCity.addEventListener('click', (() => {
+//     if (!displayKeyOutput.textContent==``) {
+//         cityFetch.delete(displayKeyOutput.textContent);
+//         controller.deleteCity(displayKeyOutput.textContent);
 
-        clearDisplay();
+//         clearDisplay();
 
-        updatePage();
+//         updatePage();
         
-    } else {
-        console.log(`select 'show' form a city card on the right pane`);
-    }
-}));
+//     } else {
+//         console.log(`select 'show' form a city card on the right pane`);
+//     }
+// }));
 
 // cityAdd.addEventListener('click', (() => {
 //     console.log('Add City');
