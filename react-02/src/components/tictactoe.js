@@ -81,9 +81,10 @@ function minimax(board, depth, isMaximizing, myState) { //board, depth, isMaximi
       // Is the spot available?
       if (board[k] === null) {
         board[k] = myState.ai;
-        let score = minimax(board, depth + 1, false, myState);
+        let score = minimax(board, depth + 1, false, myState); //myState.xIsNext
         board[k] = null;
-        bestScore = Math.max(score, bestScore)
+        bestScore = Math.max(score, bestScore) //default
+        
       }
     }
     return bestScore;
@@ -94,9 +95,10 @@ function minimax(board, depth, isMaximizing, myState) { //board, depth, isMaximi
       // Is the spot available?
       if (board[m] === null) {
         board[m] = myState.human;
-        let score = minimax(board, depth + 1, true, myState);
+        let score = minimax(board, depth + 1, true, myState); //!myState.xIsNext
         board[m] = null;
-        bestScore = Math.min(score, bestScore)
+        bestScore = Math.min(score, bestScore) 
+        
       }
     }
     return bestScore;
@@ -122,7 +124,7 @@ const bestMove = (board, myState) => { // board state , this.state
     for (j = 0; j < 9; j++) {
       if (board[j] === null) {
         board[j] = myState.ai;
-        let score = minimax(board, 0, !myState.xIsNext, myState); //false if robot goes first
+        let score = minimax(board, 0, false, myState); //false if robot goes first
         board[j] = null;
         if (score > bestScore) {
           bestScore = score;
@@ -226,11 +228,11 @@ class Tictactoe extends React.Component {
               humanTurn: false,
               ai: 'X',
               human: 'O',
-              scores: {
-                'X': 10,//-10
-                'O': -10,//10
-                'Tie': 0
-              }
+              // scores: {
+              //   'X': 10,//-10
+              //   'O': -10,//10
+              //   'Tie': 0
+              // }
             })
           }}>Robot</button>
       </div>

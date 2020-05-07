@@ -1,0 +1,75 @@
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    /* min-width: 550px; */
+    /* grid-template-columns: 50% 50%; */
+}
+#displayPanel{
+    display: grid;
+
+    /* max-width: 350px; */
+    
+}
+#actionPanel {
+    /* padding-top: 1em;
+    border-top: solid; */
+}
+
+#account {
+    
+    text-decoration: underline;
+    align-content: center;
+
+}
+
+.divBorder {
+    /* border: solid 1px grey; */
+    background-color: grey;
+    border-radius: 0.5em;
+    margin: 0.2em;
+    /* padding: 0.5em; */
+}
+
+.divBox {
+    color: black;
+    text-align: left;
+    background-color: white;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    margin: 0.5em;
+}
+
+.Card {
+    /* display: inline-flex; */
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* grid-template-columns: auto auto 80px; */
+}
+.btn {
+    background-color: powderblue;
+    width: 8em; 
+    resize: none;
+    border-radius: 0.5em;
+    border: none;
+
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
+#errMsg {
+    color: red;
+    font-size: 0.8em;
+}
+#balOutput {
+    font-family: sans-serif;
+
+    background-color: palegreen;
+    border-radius: 0.5em;
+    
+    padding: 0.5em;
+    margin: 0.5em;
+}
+#acctName {
+    grid-area: 1 / 1 / 2 / 2;
+    align-self: center;
+}

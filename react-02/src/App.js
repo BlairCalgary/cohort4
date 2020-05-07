@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import Icon from './components/Icon.js';
 import Tictactoe from './components/tictactoe.js';
-import Knotscross from './components/knotscross.js';
+import Accounts from './components/accounts.js';
 import './App.css';
+import './components/account.css';
 
 import logo from './logo.svg';
-import hamsaLogo from './hamsa.svg';
 import lotusLogo from './lotus.svg';
 import dharmaLogo from './dharma.svg';
 import buddhaLogo from './buddha.svg';
 import tictactoeLogo from './tictactoe.svg';
+import bank from './bank.svg';
 
 const iconsArr = [
   {
@@ -24,8 +25,8 @@ const iconsArr = [
   },
   {
     key: 3,
-    icon: hamsaLogo,
-    iconName: 'hamsa'
+    icon: bank,
+    iconName: 'bank'
   },
   {
     key: 4,
@@ -121,8 +122,8 @@ class App extends Component {
       case 'tictactoe':
         comp = <Tictactoe />;
         break;
-      case 'hamsa':
-        comp = <Knotscross />;
+      case 'bank':
+        comp = <Accounts />;
         break;
       default:
         comp = <img src={symLogo}
