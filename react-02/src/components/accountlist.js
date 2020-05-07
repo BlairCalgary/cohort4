@@ -15,7 +15,7 @@ function AccountBuild(props) {
 
 function AccountList(props) {
     const accts = props.accounts.slice();
-    console.log('accts in AccountList: '+ accts[0].name);
+    // console.log('accts in AccountList: '+ accts[0].name);
     return(
         <div className="divBox">
             <output id="account">Account Balances</output><br/>

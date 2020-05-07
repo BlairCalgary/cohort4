@@ -65,19 +65,24 @@ class Accounts extends React.Component {
         }
         if (amount > 0) {
             const tempRecord = acctsClone[index];
-            
-            // Write your non-negative conditional test here.
+            const newBalance = ((tempRecord.balance * 100) - (amount * 100)) / 100;
+            if (newBalance<0) {
+                this.errorMsg('Account cannot be negative.')
+                // Write your non-negative conditional test here.
+            } else {
 
-            tempRecord.balance = ((tempRecord.balance * 100) - (amount * 100)) / 100;
-            acctsClone[index] = tempRecord;
-            this.setState({ accounts: acctsClone });
+                tempRecord.balance = ((tempRecord.balance * 100) - (amount * 100)) / 100;
+                acctsClone[index] = tempRecord;
+                this.setState({ accounts: acctsClone });
+                
+            }
         } else {
             this.errorMsg('Enter a positive amount')
         }
     }
     errorMsg = (errtxt) => {
         this.setState({ error: errtxt });
-        setTimeout(() => { this.setState({ error: '' }) }, 2000)
+        setTimeout(() => { this.setState({ error: '' }) }, 2500)
     }
 
     render() {
