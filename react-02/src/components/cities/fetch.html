@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./fetch.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="container" class="divBorder">
+        <div id="leftPanel">
+            <div id="addCityDiv" class="divBox">
+                <strong>Add a city:</strong><br>
+                Name:<input id="cityName"></input><br>
+                Latitude:<input id="lat"></input><br>
+                Longitude:<input id="long"></input><br>
+                Population:<input id="pop"></input><br>
+                <button id="cityAdd" class="btn">Add Above City</button>
+                <button id="randomCity" class="btn">Random City</button>
+            </div>
+            <div id="totalPopDiv" class="divBox">
+                <div><strong>Total Population:</strong> <span id="totalPopOutput"></span></div>
+            </div>
+            <div id="mostNorthDiv" class="divBox">
+                <div><strong>Most Northern:</strong> <span id="mostNorthOutput"></span></div>
+            </div>
+            <div id="mostSouthDiv" class="divBox">
+                <div><strong>Most Southern:</strong> <span id="mostSouthOutput"></span></div>
+            </div>
+            <!-- <div id="displayDiv" class="divBox">
+                <div><em>Select 'Show' for settlement details</em></div><br>
+                <div id="displayDetailsDiv">
+                    <div id="displayDetailsLeft">
+                        <div>City: <span id="displayCityOutput"></span></div>
+                        <div>Latitude: <span id="displayLatOutput"></span></div>
+                        <div>Longitude: <span id="displayLongOutput"></span></div>
+                        <div>Population: <span id="displayPopOutput"></span></div>
+                    </div>
+                    <div id="displayDetailsRight">
+                        <div>Hemisphere: <span id="displayHemOutput"></span></div>
+                        <div>Settlement: <span id="displaySetOutput"></span></div>
+                        <div>Key: <span id="displayKeyOutput"></span></div>
+                        <div><button id="displayDelCity" class="btn">Delete</button></div>
+                    </div>
+                </div>
+                <span id="mostSouthOutput"></span>
+            </div> -->
+        </div>
+        <div class="fixHtPanel scrollbar" id="style-4">
+            <div id="rightPanel">
+                <div class="divBox Card">
+                    <div class="leftCityCard">
+                        <span>City</span>
+                        <button class="btn">Show</button>
+                    </div>
+                    <div class="rightCityCard">
+                        <button class="btn">Move In</button>
+                        <input id="moveInOut">
+                        <button class="btn">Move Out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        To do list:<br>
+        1. Review the cities in the middle panel.<br>
+        2. Delete Salt Lake City.<br>
+        3. Add a random city to list, with a population of 1000.<br>
+        4. Move 100 people into that new city.<br>
+        5. Move 50 people out of that new city.<br>
+        6. Verify the population of that new city is now 1050.
+        
+        <!-- <h1>Fetch API</h1>
+        <button id="reloadServer">Reload Server Data</button><br>
+        <button id="clCities">Console Log controller.cities</button><br>
+        <button id="loadData">Load Server Data</button><br>
+        <button id="nextKey">Next Available Key</button><br>
+        Name:<input id="cityName"></input><br>
+        Latitude:<input id="lat"></input><br>
+        Longitude:<input id="long"></input><br>
+        Population:<input id="pop"></input><br>
+        <button id="cityAdd">Add Above City</button><br>
+        Key:<input id="keyReadInput"></input><button id="keyRead">Read Key</button><br> -->
+        <!-- <script type="module" src="./scripts/main.js"></script> -->
+    </div>
+    <script type="module" src="./scripts/index.js"></script>
+    <script>
+        $(document).ready(function () {
+            if (!$.browser.webkit) {
+                $('.wrapper').html('<p>Sorry! Non webkit users. :(</p>');
+            }
+        });
+    </script>    
+</body>
+
+</html>

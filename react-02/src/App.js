@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import Icon from './components/Icon.js';
-import Tictactoe from './components/tictactoe.js';
-import Accounts from './components/accounts.js';
+import Tictactoe from './components/tictactoe/tictactoe.js';
+import Accounts from './components/accounts/accounts.js';
+import Cities from './components/cities/cities.js';
+
 import './App.css';
-import './components/account.css';
+import './components/accounts/account.css';
+import './components/cities/fetch.css';
 
 import logo from './logo.svg';
 import lotusLogo from './lotus.svg';
@@ -64,53 +67,6 @@ class App extends Component {
     })
   }
 
-
-  // switch(expression) {
-  //   case x:
-  //     // code block
-  //     break;
-  //   case y:
-  //     // code block
-  //     break;
-  //   default:
-  //     // code block
-  // }
-
-  // activeApp() {
-  //   // const appDisplay =
-  //   var comp;
-  //   switch (this.state.isActive) {
-  //     case 'tictactoe':
-  //       comp = <Tictactoe />;
-  //       break;
-  //     case 'hamsa':
-  //       comp = <Knotscross />;
-  //       break;
-  //     default:
-  //       comp = <img src={this.state.isActiveLogo}
-  //         className="App-logo" alt="logo"
-  //       />
-  //       break;
-  //   }
-    
-  //   this.setState({
-  //     activeComponent: comp
-      
-  //   })
-    
-  //   // (this.state.isActive==='tictactoe' ?
-  //   //   <Tictactoe /> :
-  //   //   <img src={this.state.isActiveLogo}
-  //   //     className="App-logo" alt="logo"
-  //   //   />)
-  //   // (this.state.isActive==='hamsa' ?
-  //   //    :
-  //   //   <img src={this.state.isActiveLogo}
-  //   //     className="App-logo" alt="logo"
-  //   //   />)
-      
-  //   // return appDisplay
-  // }
   onClick = (e) => {
     const symLogo = e.target.getAttribute("icon")
     this.setState({isActiveLogo: symLogo})
@@ -124,6 +80,9 @@ class App extends Component {
         break;
       case 'bank':
         comp = <Accounts />;
+        break;
+      case 'lotus':
+        comp = <Cities />;
         break;
       default:
         comp = <img src={symLogo}

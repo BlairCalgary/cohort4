@@ -3,8 +3,6 @@ import AccountList from './accountlist.js'
 import AccountMgmt from './accountmgmt.js'
 import Tools from './tools.js'
 import Amount from './amount.js'
-import { Account } from './account.js';
-import { AccountController } from './account.js';
 
 
 class Accounts extends React.Component {
