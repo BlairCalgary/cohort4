@@ -7,20 +7,13 @@ import Cards from './cards.js'
 
 import {City} from './130d.js';
 import {CityFetch} from './130d.js';
-import {Controller} from './130d.js';
-import {Capitals} from './130d.js';
+// import {Controller} from './130d.js';
 
 const cityFetch = new CityFetch();
-const controller = new Controller();
-const capitals = new Capitals();
+// const controller = new Controller();
 
-// async function loadServerData() {
-//     const resp = await cityFetch.all();
-//     for (const obj in resp) {
-//         controller.createCity(new City(resp[obj]));
-//     }
-// };
-// loadServerData();
+
+
 
 class Cities extends React.Component {
     constructor() {
@@ -28,6 +21,7 @@ class Cities extends React.Component {
         this.state = {
             cities: [],
         }
+        // this.deleteIt.bind(this);
     }
     componentDidMount = async () => {
         const citiesClone = [...this.state.cities];
@@ -38,12 +32,100 @@ class Cities extends React.Component {
         }
         this.setState({ cities: citiesClone });
     }
+    deleteIt = (props) => {
+        const City = props;
+        const confirmDelete = window.confirm("Delete " + City +"?");
+
+        const citiesClone = [...this.state.cities];
+
+        if (confirmDelete) {
+            for (const keyCount in citiesClone) {
+                if (citiesClone[keyCount].name===City) {
+                    const displayKey = citiesClone[keyCount].key;
+                    cityFetch.delete(displayKey);
+                    
+                    citiesClone.splice(keyCount,1);
+                    this.setState({
+                        cities: citiesClone,
+                    })
+                    // controller.deleteCity(displayKey);
+                    
+                    
+                } 
+            }
+            
+            // clearDisplay();
+    
+            // updatePage();
+            
+        }
+
+        // console.log('in delete: ', props)
+    }
+
+    moveIn = async (city, migration) => {
+        const citiesClone = [...this.state.cities];
+        for (const keyCount in citiesClone) {
+            if (citiesClone[keyCount].name===city) {
+                const cityObj = JSON.parse(JSON.stringify(citiesClone[keyCount]));
+                cityObj.population=String(Number(cityObj.population)+Number(migration))
+                // cityObj.population+=migration;
+                await cityFetch.update(cityObj);
+
+                citiesClone[keyCount] = cityObj;
+                this.setState({cities: citiesClone})
+
+                // console.log(cityObj);
+                break;
+            }
+        }
+        // console.log('in moveInParent: ', city, migration);
+    }
+    moveOut = async (city, migration) => {
+        const citiesClone = [...this.state.cities];
+        for (const keyCount in citiesClone) {
+            if (citiesClone[keyCount].name===city) {
+                const cityObj = JSON.parse(JSON.stringify(citiesClone[keyCount]));
+                cityObj.population=String(Number(cityObj.population)-Number(migration))
+                // cityObj.population+=migration;
+                await cityFetch.update(cityObj);
+                citiesClone[keyCount] = cityObj;
+                this.setState({cities: citiesClone})
+                // console.log(cityObj);
+                break;
+            }
+        }
+        // console.log('in moveOutParent: ', city, migration);
+    }
+
+    addCity = async (props) => {
+        // console.log('addCity props ', props);
+        const cloneProps = { ...props };
+        const citiesClone = [...this.state.cities];
+
+        const keys = [];
+        for (const keyCount in citiesClone) {
+            keys.push(citiesClone[keyCount].key);
+        }
+        let i = 0;
+        do {
+            i++;
+        }
+        while (keys.indexOf(String(i))>=0);
+        const newKey = String(i);
+        cloneProps.key = newKey;
+        await cityFetch.add(cloneProps);
+        citiesClone.push(new City(cloneProps));
+        this.setState({ cities: citiesClone });
+        
+        // console.log(props.name);
+    }
     render() {
         return (
             <div className="divBorder">
                 <div id="container">
                     <div id="leftPanel">
-                        <AddACity />
+                        <AddACity addCity={this.addCity} cities={this.state.cities}/>
                     </div>
                     <div id="leftPanel">
                         <TotalPop cities={this.state.cities}/>
@@ -52,7 +134,12 @@ class Cities extends React.Component {
                     </div>
                 </div>
                 <div>
-                    <Cards cities={this.state.cities}/>
+                    <Cards
+                        cities={this.state.cities}
+                        deleteIt={this.deleteIt}
+                        moveInParent={this.moveIn}
+                        moveOutParent={this.moveOut}
+                    />
                 </div>
             </div>  
         )

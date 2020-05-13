@@ -3,7 +3,7 @@ import React from 'react'
 function getMostNorthern(cities) {
     let most = 0;
     for (const lat in cities) {
-        console.log(cities[lat].name);
+        // console.log(cities[lat].name);
         if (lat===0) {
             most = lat
         }
