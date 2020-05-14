@@ -9,7 +9,7 @@ import './components/accounts/account.css';
 import './components/cities/fetch.css';
 
 import logo from './logo.svg';
-import lotusLogo from './lotus.svg';
+import cityLogo from './city.svg';
 import dharmaLogo from './dharma.svg';
 import buddhaLogo from './buddha.svg';
 import tictactoeLogo from './tictactoe.svg';
@@ -33,8 +33,8 @@ const iconsArr = [
   },
   {
     key: 4,
-    icon: lotusLogo,
-    iconName: 'lotus'
+    icon: cityLogo,
+    iconName: 'city'
   },
   {
     key: 5,
@@ -81,7 +81,7 @@ class App extends Component {
       case 'bank':
         comp = <Accounts />;
         break;
-      case 'lotus':
+      case 'city':
         comp = <Cities />;
         break;
       default:
