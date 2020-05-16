@@ -3,6 +3,7 @@ import Icon from './components/Icon.js';
 import Tictactoe from './components/tictactoe/tictactoe.js';
 import Accounts from './components/accounts/accounts.js';
 import Cities from './components/cities/cities.js';
+import { LinkedListComp } from './components/linkedlist/linkedlist.js';
 
 import './App.css';
 import './components/accounts/account.css';
@@ -10,7 +11,8 @@ import './components/cities/fetch.css';
 
 import logo from './logo.svg';
 import cityLogo from './city.svg';
-import dharmaLogo from './dharma.svg';
+// import dharmaLogo from './dharma.svg';
+import linkedListLogo from './linkedlist.svg';
 import buddhaLogo from './buddha.svg';
 import tictactoeLogo from './tictactoe.svg';
 import bank from './bank.svg';
@@ -38,8 +40,8 @@ const iconsArr = [
   },
   {
     key: 5,
-    icon: dharmaLogo,
-    iconName: 'dharma'
+    icon: linkedListLogo,
+    iconName: 'linkedList'
   },
   {
     key: 6,
@@ -83,6 +85,9 @@ class App extends Component {
         break;
       case 'city':
         comp = <Cities />;
+        break;
+      case 'linkedList':
+        comp = <LinkedListComp />;
         break;
       default:
         comp = <img src={symLogo}
