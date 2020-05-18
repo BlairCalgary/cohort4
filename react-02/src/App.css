@@ -66,3 +66,36 @@
     transform: rotate(360deg);
   }
 }
+
+.center {
+  align-self: center;
+}
+
+.horiz {
+  display: inline-flex;
+  
+}
+
+.justCont {
+  display: flex;
+  flex-direction: column;
+  max-width: 80vw !important;
+}
+
+
+
+.minwidth {
+  width: min-content;
+  align-self: center;
+}
+
+.btnWide {
+  background-color: powderblue;
+  width: auto; 
+  resize: none;
+  border-radius: 0.5em;
+  border: none;
+
+  padding: 0.5em;
+  margin: 0.5em;
+}
