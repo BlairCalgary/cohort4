@@ -3,8 +3,10 @@ import { Cards } from './cards.js';
 import { UserInput } from './userinput.js';
 import { CardSelection } from './cardselection.js';
 import { LinkedList } from './index';
-// import './linkedlist.css';
 
+// Using JDENTICON
+// 
+// https://www.npmjs.com/package/react-jdenticon
 
 function LinkedListComp () {
     const [ linkedlist, setLL ] = useState (new LinkedList());
@@ -32,10 +34,10 @@ function LinkedListComp () {
           document.body.removeChild(script);
         }
       }, []);
-    const add = (event) => {
-        linkedlist.push(`Blair`+linkedlist.length,11);
+    const add = (userName, userStr) => {
+        linkedlist.insert(userName, userStr);
         updateState();
-        event.preventDefault();
+        
     }
     const next = (event) => {
         linkedlist.next();

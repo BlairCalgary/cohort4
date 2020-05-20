@@ -6,7 +6,7 @@ function Cards (props) {
     // initialize
     const cardsDiv = [];
     var activeClass = '';
-
+    var cardKey;
     var temp = new LinkedList();
     temp.head = props.list.head;
     temp.tail = props.list.tail;
@@ -17,9 +17,13 @@ function Cards (props) {
     if (props.list.head) {
         var currentCard = temp.head;
         if (currentCard===temp.active) {activeClass = "activeCard"} ;
+        
+        
+        cardKey = currentCard.key.substr(currentCard.key.length - 5);
+        console.log(cardKey);
         cardsDiv.push(
-            <div className={"nodeCard "+activeClass}>
-                <Jdenticon size="80" value={currentCard.name+currentCard.str}/>
+            <div key={cardKey} className={"nodeCard "+activeClass}>
+                <Jdenticon size="80" value={cardKey}/> {/*value={currentCard.name+currentCard.str}*/}
                 {currentCard.name}<br/>
                 {currentCard.str}
             </div>
@@ -29,9 +33,12 @@ function Cards (props) {
         for (var x = 1; x < temp.length; x++) {
             currentCard = lastCard.next
             if (currentCard===temp.active) {activeClass = "activeCard"} ;
+            cardKey = currentCard.key.substr(currentCard.key.length - 5);
+            console.log(cardKey);
+        
             cardsDiv.push(
-                <div className={"nodeCard "+activeClass}>
-                    <Jdenticon size="80" value={currentCard.name+currentCard.str}/>
+                <div key={cardKey} className={"nodeCard "+activeClass}>
+                    <Jdenticon size="80" value={cardKey}/>
                     {currentCard.name}<br/>
                     {currentCard.str}
                 </div>
@@ -43,9 +50,13 @@ function Cards (props) {
     
     if (props.list.length>0) {
         return ( 
+            <div style={{fontSize: "medium"}}>
+                # of Cards: {props.list.length}{' | '}
+                    Total Strength: {props.list.total}<br></br>
+                    
                 <div className="cardContainer">
                     {cardsDiv}
-                    {/* {props.list.active.name} */}
+                </div>
                 </div>
         )
             

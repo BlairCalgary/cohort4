@@ -4,6 +4,7 @@ class ListNode {
         this.str = strength 
         this.prev = null;
         this.next = null;
+        this.key = String(Date.now()+strength);
     }
 }
 class LinkedList {
@@ -20,13 +21,13 @@ class LinkedList {
             this.head = node;
             this.tail = node;
             this.active = node;
-            this.total+=strength;
+            this.total+=Number(strength);
         } else {
             let temp = this.tail;
             this.tail = node;
             node.prev = temp;
             temp.next = node;
-            this.total+=strength;
+            this.total+=Number(strength);
         }
         this.length++;
     }
@@ -36,20 +37,20 @@ class LinkedList {
         let temp = this.tail;
 
         if(this.length === 1) {
-            this.total-=temp.str;
+            this.total-=Number(temp.str);
             this.head = null;
             this.tail = null;
             this.active = null;
 
         } else {
             // console.log('temp.strength: ', this.tail.str);
-            this.total-=temp.str;
+            this.total-=Number(temp.str);
             this.tail = temp.prev;
             this.tail.next = null;
-            temp.prev = null;
             if (this.active===temp) {
                 this.active=temp.prev;
             }
+            temp.prev = null;
         }
         this.length--;
     }
@@ -57,13 +58,13 @@ class LinkedList {
     unshift(name, strength) {
         let node = new ListNode(name, strength);
         if(!this.head) {
-            this.total+=strength;
+            this.total+=Number(strength);
             this.head = node;
             this.tail = node;
             this.active = node;
         } else {
             let temp = this.head;
-            this.total+=strength;
+            this.total+=Number(strength);
             this.head = node;
             node.next = temp;
             temp.prev = node;
@@ -75,7 +76,7 @@ class LinkedList {
         if(!this.head) return undefined;
         let temp = this.head;
         if(this.length === 1) {
-            this.total-=temp.str;
+            this.total-=Number(temp.str);
             this.head = null;
             this.tail = null;
             this.active = null;
@@ -85,7 +86,7 @@ class LinkedList {
                 // console.log(temp.next);
                 this.active=temp.next;
             }
-            this.total-=temp.str;
+            this.total-=Number(temp.str);
             this.head = temp.next;
             this.head.prev = null;
             temp.next = null;
@@ -129,7 +130,7 @@ class LinkedList {
         let node = new ListNode(name, strength);
         const temp = this.active.next;
         const tempAct = this.active;
-        this.total+=node.str;
+        this.total+=Number(node.str);
         temp.prev=node;
         node.next=temp;
         node.prev=tempAct;
@@ -156,7 +157,7 @@ class LinkedList {
         // const temp = this.active;
         const tempPrev = this.active.prev;
         const tempNext = this.active.next;
-        this.total-=this.active.str;
+        this.total-=Number(this.active.str);
         tempPrev.next = tempNext;
         tempNext.prev = tempPrev;
         this.active = tempPrev;

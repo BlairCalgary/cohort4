@@ -220,4 +220,8 @@ test('test delete LinkedList', () => {
     expect(ctrl.head.name).toBe("Blair");
     expect(ctrl.head.next.name).toBe("Dylan");
     expect(ctrl.length).toBe(2);
+
+    ctrl.last();
+    ctrl.delete();
+    console.log("active name:", ctrl.active.name);
 });
