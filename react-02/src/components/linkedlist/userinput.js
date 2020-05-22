@@ -31,6 +31,7 @@ function UserInput (props) {
                         <label>Name: </label>
                         <input
                             type="text"
+                            name="name"
                             value={userName}
                             onChange={e=>setUserName(e.target.value)}
                         />
@@ -39,6 +40,7 @@ function UserInput (props) {
                         <label>Strength:</label>
                         <input
                             type="number"
+                            name="strength"
                             value={userStr}
                             onChange={e=>setUserStr(e.target.value)}
                         />

@@ -14,7 +14,7 @@ function CardSelection (props) {
                 <button className="btnNav" onClick={props.first}><img src={previous} alt="first" className="btnSVG"/></button>
                 <button className="btnNav" onClick={props.prev}><img src={rewind} alt="previous" className="btnSVG" /></button>
                 <button className="btnNav" onClick={props.delete}><img src={trash} alt="delete" className="btnSVG" /></button>
-                <button className="btnNav" onClick={props.next}><img src={ffwd} alt="fast forward" className="btnSVG"/></button>
+                <button className="btnNav" onClick={props.next}><img src={ffwd} alt="next" className="btnSVG"/></button>
                 <button className="btnNav" onClick={props.last}><img src={skip} alt="last" className="btnSVG"/></button>
                 </div>
             </div>

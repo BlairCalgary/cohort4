@@ -166,6 +166,7 @@ class LinkedList {
     total() {
         return this.total;
     }
+    
 }
 
 

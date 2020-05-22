@@ -1,4 +1,9 @@
 import { ListNode , LinkedList } from './index';
+import { UserInput } from './userinput.js';
+import React from "react";
+import { fireEvent, render, screen, act } from '@testing-library/react';
+import { CardSelection } from './cardselection.js';
+import { Cards } from './cards.js';
 
 test('test the listNode', () => {
     const node = new ListNode();
@@ -223,5 +228,41 @@ test('test delete LinkedList', () => {
 
     ctrl.last();
     ctrl.delete();
-    console.log("active name:", ctrl.active.name);
+});
+
+test('test CardSelection component', () => {
+    const mockFirstCallback = jest.fn();
+    const mockNextCallback = jest.fn();
+    const mockPrevCallback = jest.fn();
+    const mockLastCallback = jest.fn();
+    const mockDeleteCallback = jest.fn();
+    render(<CardSelection
+        first={mockFirstCallback}
+        next={mockNextCallback}
+        prev={mockPrevCallback}
+        last={mockLastCallback}
+        delete={mockDeleteCallback}
+    />);
+    // document.querySelector(`[alt=first]`).value = "Blair";
+    // document.querySelector(`[name=strength]`).value = 11;
+    fireEvent.click(
+        screen.getByAltText(/first/)
+    );
+    expect(mockFirstCallback.mock.calls.length).toBe(1);
+    fireEvent.click(
+        screen.getByAltText(/next/)
+    );
+    expect(mockNextCallback.mock.calls.length).toBe(1);
+    fireEvent.click(
+        screen.getByAltText(/previous/)
+    );
+    expect(mockPrevCallback.mock.calls.length).toBe(1);
+    fireEvent.click(
+        screen.getByAltText(/last/)
+    );
+    expect(mockLastCallback.mock.calls.length).toBe(1);
+    fireEvent.click(
+        screen.getByAltText(/delete/)
+    );
+    expect(mockDeleteCallback.mock.calls.length).toBe(1);
 });
