@@ -26,39 +26,45 @@ class Styles {
 
 class Fifo {
     constructor() {
-        this.items = [],
+        this.items = []
         this.new = null;
     };
-    enqueue(name){
-        const newItem = new ItemNode(name);
-        this.items.push(newItem);
-        this.new = newItem;
+    enqueue(item){
+        // const newItem = new ItemNode(name);
+        this.items.push(item);
+        this.new = item;
     };
     dequeue(){
-        this.items.shift();
-        if (!this.items.length) {
-            this.new = null;
+        if (this.items.length) {
+            const temp = this.items.shift();
+            if (!this.items.length) {
+                this.new = null;
+            }
+            return temp;
         }
     };
 }
 
 class Lifo {
     constructor() {
-        this.items = [],
+        this.items = []
         this.new = null
     };
-    enqueue(name){
-        const newItem = new ItemNode(name);
-        this.items.push(newItem);
-        this.new = newItem;
+    enqueue(item){
+        // const newItem = new ItemNode(name);
+        this.items.push(item);
+        this.new = item;
         
     };
     dequeue(){
-        this.items.pop();
-        if (!this.items.length) {
-            this.new = null;
-        } else {
-            this.new = this.items[this.items.length-1]
+        if (this.items.length) {
+            const temp = this.items.pop();
+            if (!this.items.length) {
+                this.new = null;
+            } else {
+                this.new = this.items[this.items.length-1]
+            }
+            return temp;
         }
     };
 }

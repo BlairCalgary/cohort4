@@ -4,6 +4,7 @@ import TotalPop from './totalpop.js'
 import MostNorth from './mostnorth.js'
 import MostSouth from './mostsouth.js'
 import Cards from './cards.js'
+import { ThemeContext } from '../theme/ThemeContext';
 
 import {City} from './130d.js';
 import {CityFetch} from './130d.js';
@@ -122,8 +123,14 @@ class Cities extends React.Component {
     }
     render() {
         return (
+            <ThemeContext.Consumer>{(context) => {
+                const { isLightTheme, light, dark, toggleTheme } = context;
+                const theme = isLightTheme ? light : dark;
+
+
+                return (
             <div className="divBorder">
-                <div id="container">
+                <div id="container" style={{background: theme.ui}}>
                     <div id="leftPanel">
                         <AddACity addCity={this.addCity} cities={this.state.cities}/>
                     </div>
@@ -133,7 +140,7 @@ class Cities extends React.Component {
                         <MostSouth cities={this.state.cities}/>
                     </div>
                 </div>
-                <div>
+                <div style={{background: theme.ui}}>
                     <Cards
                         cities={this.state.cities}
                         deleteIt={this.deleteIt}
@@ -142,7 +149,9 @@ class Cities extends React.Component {
                     />
                 </div>
             </div>  
-        )
+        )}}
+        </ThemeContext.Consumer>
+    )
     }
 }
 

@@ -3,7 +3,7 @@ import AccountList from './accountlist.js'
 import AccountMgmt from './accountmgmt.js'
 import Tools from './tools.js'
 import Amount from './amount.js'
-
+import { ThemeContext } from '../theme/ThemeContext';
 
 class Accounts extends React.Component {
     constructor() {
@@ -64,7 +64,7 @@ class Accounts extends React.Component {
         if (amount > 0) {
             const tempRecord = acctsClone[index];
             const newBalance = ((tempRecord.balance * 100) - (amount * 100)) / 100;
-            if (newBalance<0) {
+            if (newBalance < 0) {
                 this.errorMsg('Account cannot be negative.')
                 // Write your non-negative conditional test here.
             } else {
@@ -72,7 +72,7 @@ class Accounts extends React.Component {
                 tempRecord.balance = ((tempRecord.balance * 100) - (amount * 100)) / 100;
                 acctsClone[index] = tempRecord;
                 this.setState({ accounts: acctsClone });
-                
+
             }
         } else {
             this.errorMsg('Enter a positive amount')
@@ -85,16 +85,25 @@ class Accounts extends React.Component {
 
     render() {
         return (
-            <div id="container">
-                <div id="left" className="divBorder">
-                    <AccountList accounts={this.state.accounts} removeAcct={this.removeAcct} />
-                    <AccountMgmt addAcct={this.addAcct} errorMsg={this.errorMsg} />
-                    <Tools accounts={this.state.accounts} />
-                </div>
-                <div id="actionPanel" className="divBorder">
-                    <Amount withdraw={this.withdraw} deposit={this.deposit} accounts={this.state.accounts} errorMsg={this.errorMsg} error={this.state.error} />
-                </div>
-            </div>
+            <ThemeContext.Consumer>{(context) => {
+                const { isLightTheme, light, dark, toggleTheme } = context;
+                const theme = isLightTheme ? light : dark;
+
+
+                return (
+                    <div id="container" >
+                        <div id="left" className="divBorder" style={{background: theme.ui}}>
+                            <AccountList accounts={this.state.accounts} removeAcct={this.removeAcct} />
+                            <AccountMgmt addAcct={this.addAcct} errorMsg={this.errorMsg} />
+                            <Tools accounts={this.state.accounts} />
+                        </div>
+                        <div id="actionPanel" className="divBorder" style={{background: theme.ui}}>
+                            <Amount withdraw={this.withdraw} deposit={this.deposit} accounts={this.state.accounts} errorMsg={this.errorMsg} error={this.state.error} />
+                        </div>
+                    </div>
+                )
+            }}
+            </ThemeContext.Consumer>
         )
     }
 }

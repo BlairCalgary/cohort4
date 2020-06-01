@@ -3,6 +3,7 @@ import Icon from './components/Icon.js';
 import Tictactoe from './components/tictactoe/tictactoe.js';
 import Accounts from './components/accounts/accounts.js';
 import Cities from './components/cities/cities.js';
+import { Queue } from './components/queue/queue.js';
 import { LinkedListComp } from './components/linkedlist/linkedlist.js';
 
 import './App.css';
@@ -11,11 +12,17 @@ import './components/cities/fetch.css';
 
 import logo from './logo.svg';
 import cityLogo from './city.svg';
-// import dharmaLogo from './dharma.svg';
+import stackLogo from './stack.svg';
 import linkedListLogo from './linkedlist.svg';
-import buddhaLogo from './buddha.svg';
 import tictactoeLogo from './tictactoe.svg';
-import bank from './bank.svg';
+import bankLogo from './bank.svg';
+import settingsLogo from './settings.svg';
+
+// import { themes, ThemeContext } from './components/theme/theme-context.js';
+
+import ThemeContextProvider from './components/theme/ThemeContext.js';
+import ThemeTogglerButton from './components/theme/theme-toggler-button.js';
+import Theme from './components/theme/theme.js'
 
 const iconsArr = [
   {
@@ -30,7 +37,7 @@ const iconsArr = [
   },
   {
     key: 3,
-    icon: bank,
+    icon: bankLogo,
     iconName: 'bank'
   },
   {
@@ -45,22 +52,43 @@ const iconsArr = [
   },
   {
     key: 6,
-    icon: buddhaLogo,
-    iconName: 'buddha'
+    icon: stackLogo,
+    iconName: 'stack'
+  },
+  {
+    key: 7,
+    icon: settingsLogo,
+    iconName: 'settings'
   },
 ]
 
 class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props);
+    
+    // this.toggleTheme = () => {
+    //   console.log('in toggletheme')
+      
+    //   this.setState(state => ({
+    //     theme:
+    //       (state.theme === themes.dark
+    //         ? themes.light
+    //         : themes.dark),
+    //   }));
+    // }
+    
     this.state = {
+      // theme: themes.light,
+      toggleTheme: this.toggleTheme,
       isActive: 'none',
       isActiveLogo: logo,
       activeComponent: <img src={logo}
         className="App-logo" alt="logo"
         />,
-    }
+    };
+    
   }
+
   activate = (symbol, symLogo) => {
     console.log(symbol);
     this.setState({
@@ -89,6 +117,12 @@ class App extends Component {
       case 'linkedList':
         comp = <LinkedListComp />;
         break;
+      case 'stack':
+        comp = <Queue />;
+        break;
+      case 'settings':
+        comp = <Theme />;
+        break;
       default:
         comp = <img src={symLogo}
           className="App-logo" alt="logo"
@@ -99,12 +133,10 @@ class App extends Component {
     this.setState({
       activeComponent: comp,
       isActive: todo,
-      
     })
   }
 
   render() {
-    // const appDisplay = this.activeApp();
     return (
       <div className="App">
           <div onClick={this.onClick} className="Om-header">
@@ -120,8 +152,10 @@ class App extends Component {
             ))}
           </div>
         <header className="App-header">
+        <ThemeContextProvider>
           {this.state.activeComponent}
-          
+        </ThemeContextProvider>
+
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
@@ -137,6 +171,14 @@ class App extends Component {
       </div>
     );
   }
+}
+
+function Content() {
+  return (
+    <div>
+      <ThemeTogglerButton />
+    </div>
+  );
 }
 
 export default App;

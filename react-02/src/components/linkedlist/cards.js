@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { LinkedList } from './index';
 import Jdenticon from 'react-jdenticon';
+import { ThemeContext } from '../theme/ThemeContext';
 
-function Cards (props) {
+function Cards(props) {
     // initialize
     const cardsDiv = [];
     var activeClass = '';
@@ -16,15 +17,15 @@ function Cards (props) {
 
     if (props.list.head) {
         var currentCard = temp.head;
-        if (currentCard===temp.active) {activeClass = "activeCard"} ;
-        
-        
+        if (currentCard === temp.active) { activeClass = "activeCard" };
+
+
         cardKey = currentCard.key.substr(currentCard.key.length - 5);
         console.log(cardKey);
         cardsDiv.push(
-            <div key={cardKey} className={"nodeCard "+activeClass}>
-                <Jdenticon size="80" value={cardKey}/> {/*value={currentCard.name+currentCard.str}*/}
-                {currentCard.name}<br/>
+            <div key={cardKey} className={"nodeCard " + activeClass}>
+                <Jdenticon size="80" value={cardKey} /> {/*value={currentCard.name+currentCard.str}*/}
+                {currentCard.name}<br />
                 {currentCard.str}
             </div>
         );
@@ -32,14 +33,14 @@ function Cards (props) {
         var lastCard = currentCard;
         for (var x = 1; x < temp.length; x++) {
             currentCard = lastCard.next
-            if (currentCard===temp.active) {activeClass = "activeCard"} ;
+            if (currentCard === temp.active) { activeClass = "activeCard" };
             cardKey = currentCard.key.substr(currentCard.key.length - 5);
             console.log(cardKey);
-        
+
             cardsDiv.push(
-                <div key={cardKey} className={"nodeCard "+activeClass}>
-                    <Jdenticon size="80" value={cardKey}/>
-                    {currentCard.name}<br/>
+                <div key={cardKey} className={"nodeCard " + activeClass}>
+                    <Jdenticon size="80" value={cardKey} />
+                    {currentCard.name}<br />
                     {currentCard.str}
                 </div>
             );
@@ -47,23 +48,32 @@ function Cards (props) {
             activeClass = '';
         }
     }
-    
-    if (props.list.length>0) {
-        return ( 
-            <div style={{fontSize: "medium"}}>
-                # of Cards: {props.list.length}{' | '}
+
+    if (props.list.length > 0) {
+        return (
+            <ThemeContext.Consumer>{(context) => {
+                const { isLightTheme, light, dark, toggleTheme } = context;
+                const theme = isLightTheme ? light : dark;
+
+                return (
+                    <div style={{ fontSize: "medium" }} >
+                        # of Cards: {props.list.length}{' | '}
                     Total Strength: {props.list.total}<br></br>
-                    
-                <div className="cardContainer">
-                    {cardsDiv}
-                </div>
-                </div>
+
+                        <div className="cardContainer" style={{background: theme.bg}}>
+                            {cardsDiv}
+                        </div>
+                    </div>
+                )
+            }}
+            </ThemeContext.Consumer>
+
         )
-            
+
     } else {
         return (
             <div>
-            
+
             </div>
         )
     }

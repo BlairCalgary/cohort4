@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { ThemeContext } from '../theme/ThemeContext';
 
 function settlement(pop) {
     if (pop>100000) { return 'City' };
@@ -29,17 +29,21 @@ class Cards extends React.Component {
         // console.log('in moveOut: ', city, migration);
     }
     render () {
-        return (
+        return(
+            <ThemeContext.Consumer>{(context) => {
+                const {isLightTheme,light,dark,toggleTheme} = context;
+                const theme = isLightTheme ? light : dark;
+                return (
             <div>
                 {
                     this.props.cities.map((user, i) => {
                         
                         return (
-                            <div className="divBox Card" key={this.props.cities[i].key} >
+                            <div className="divBox Card"  style={{background: theme.bg}} key={this.props.cities[i].key} >
                                 <div>
                                     <div className="leftCityCard">
                                         <strong>{this.props.cities[i].name}</strong>
-                                        <button className="trash" onClick={(e) => this.delete(e)} />
+                                        <button className="trash"  onClick={(e) => this.delete(e)} />
                                     </div>
                                     <div>
                                         Settlement: {settlement(this.props.cities[i].population)}<br />
@@ -66,6 +70,10 @@ class Cards extends React.Component {
                 }
             </div>
         )
+    }}            
+</ThemeContext.Consumer>
+
+)
     }
 }
 

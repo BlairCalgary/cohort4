@@ -1,4 +1,5 @@
 import React from 'react'
+import { ThemeContext } from '../theme/ThemeContext';
 // import {Capitals} from './130d.js';
 
 
@@ -16,50 +17,50 @@ class AddACity extends React.Component {
         const cloneCities = [...this.props.cities];
         // console.log(cloneCities);
 
-        clone.name=document.querySelector(`[name="cityName"]`).value;
-        clone.latitude=document.querySelector(`[name="cityLat"]`).value;
-        clone.longitude=document.querySelector(`[name="cityLong"]`).value;
-        clone.population=document.querySelector(`[name="cityPop"]`).value;
+        clone.name = document.querySelector(`[name="cityName"]`).value;
+        clone.latitude = document.querySelector(`[name="cityLat"]`).value;
+        clone.longitude = document.querySelector(`[name="cityLong"]`).value;
+        clone.population = document.querySelector(`[name="cityPop"]`).value;
 
         var cityExists = false;
-        for (let p = 0; p<cloneCities.length; p++) {
-            if(cloneCities[p].name===clone.name) {
+        for (let p = 0; p < cloneCities.length; p++) {
+            if (cloneCities[p].name === clone.name) {
                 cityExists = true;
             }
         }
         // console.log('does city exist?: ', cloneCities.find(el => el === clone.name))
         // console.log('city Search: ', clone.name);
-        
+
 
         try {
-            if(!clone.name) {
+            if (!clone.name) {
                 const el = document.querySelector(`[name="cityName"]`);
                 el.focus();
                 el.select();
                 window.alert('City name cannot be blank.');
                 throw new Error('City Name cannot be blank.');
             }
-            if(cityExists) {
+            if (cityExists) {
                 const el = document.querySelector(`[name="cityName"]`);
                 el.focus();
                 el.select();
                 window.alert('City already exists.');
                 throw new Error('City already exists.');
             }
-            if(!clone.latitude) {clone.latitude="0"};
-            if(!clone.longitude) {clone.longitude="0"};
-            if(!clone.population) {clone.population="0"};
+            if (!clone.latitude) { clone.latitude = "0" };
+            if (!clone.longitude) { clone.longitude = "0" };
+            if (!clone.population) { clone.population = "0" };
             this.props.addCity(clone);
-            document.querySelector(`[name="cityName"]`).value='';
-            document.querySelector(`[name="cityLat"]`).value='';
-            document.querySelector(`[name="cityLong"]`).value='';
-            document.querySelector(`[name="cityPop"]`).value='';
+            document.querySelector(`[name="cityName"]`).value = '';
+            document.querySelector(`[name="cityLat"]`).value = '';
+            document.querySelector(`[name="cityLong"]`).value = '';
+            document.querySelector(`[name="cityPop"]`).value = '';
         } catch (e) {
 
         }
 
-        
-        
+
+
     }
     async componentDidMount() {
         // const capitals = new Capitals();
@@ -80,7 +81,7 @@ class AddACity extends React.Component {
         const rando = Math.floor(Math.random() * this.state.capitals.length)
         // fetchCapital(this.state.capitals[rando]);
         const citySearch = this.state.capitals[rando]
-        const rCity = await fetch(`https://restcountries.eu/rest/v2/capital/`+citySearch);
+        const rCity = await fetch(`https://restcountries.eu/rest/v2/capital/` + citySearch);
         const resp = await rCity.json();
 
         const cityEl = document.querySelector(`[name="cityName"]`);
@@ -105,42 +106,50 @@ class AddACity extends React.Component {
         //         population:resp[0].population,
         //     }
         // });
-        
+
     }
     nameChange = (event) => {
-        this.setState({city: {name: event.target.value}})
+        this.setState({ city: { name: event.target.value } })
     }
     latChange = (event) => {
-        this.setState({city: {latitude: event.target.value}})
+        this.setState({ city: { latitude: event.target.value } })
     }
     longChange = (event) => {
-        this.setState({city: {longitude: event.target.value}})
+        this.setState({ city: { longitude: event.target.value } })
     }
     popChange = (event) => {
-        this.setState({city: {population: event.target.value}})
+        this.setState({ city: { population: event.target.value } })
     }
     render() {
-        return(
-            <div id="addCityDiv" className="divBox">
-                <form id="cityInput">
-                    <strong>Add a city:</strong><br/>
+        return (
+            <ThemeContext.Consumer>{(context) => {
+                const { isLightTheme, light, dark, toggleTheme } = context;
+                const theme = isLightTheme ? light : dark;
+                return (
+                    <div id="addCityDiv" className="divBox" style={{ background: theme.bg }}>
+                        <form id="cityInput">
+                            <strong>Add a city:</strong><br />
 
-                    <label>Name:</label>
-                    <input name="cityName"></input><br/>
+                            <label>Name:</label>
+                            <input name="cityName"></input><br />
 
-                    <label>Latitude:</label>
-                    <input name="cityLat"></input><br/>
+                            <label>Latitude:</label>
+                            <input name="cityLat"></input><br />
 
-                    <label>Longitude:</label>
-                    <input name="cityLong"></input><br/>
+                            <label>Longitude:</label>
+                            <input name="cityLong"></input><br />
 
-                    <label>Population:</label>
-                    <input name="cityPop"></input><br/>
+                            <label>Population:</label>
+                            <input name="cityPop"></input><br />
 
-                    <button onClick={this.onSave} className="btn">Add Above City</button>
-                    <button onClick={this.onRandom} className="btn">Random City</button>
-                </form>
-            </div>
+                            <button onClick={this.onSave} className="btn">Add Above City</button>
+                            <button onClick={this.onRandom} className="btn">Random City</button>
+                        </form>
+                    </div>
+                )
+            }}
+            </ThemeContext.Consumer>
+
         )
     }
 }

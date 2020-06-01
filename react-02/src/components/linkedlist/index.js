@@ -165,9 +165,7 @@ class LinkedList {
     }
     total() {
         return this.total;
-    }
-    
+    }    
 }
-
 
 export { ListNode , LinkedList };

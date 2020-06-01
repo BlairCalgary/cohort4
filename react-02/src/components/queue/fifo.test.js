@@ -20,15 +20,18 @@ test('test Fifo', () => {
     expect(fifo).toBeInstanceOf(Fifo);
     expect(fifo.items.length).toBe(0);
     const itemName = styles.getStyle();
-    fifo.enqueue(itemName);
+// ***create Item***
+    fifo.enqueue(new ItemNode(itemName));
     expect(fifo.new.name).toBe(itemName);
     expect(fifo.items.length).toBe(1);
     const itemName2 = styles.getStyle();
-    fifo.enqueue(itemName2);
+// ***create Item***
+    fifo.enqueue(new ItemNode(itemName2));
     expect(fifo.new.name).toBe(itemName2);
     expect(fifo.items.length).toBe(2);
     const itemName3 = styles.getStyle();
-    fifo.enqueue(itemName3);
+// ***create Item***
+    fifo.enqueue(new ItemNode(itemName3));
     expect(fifo.new.name).toBe(itemName3);
     expect(fifo.items.length).toBe(3);
 });
@@ -37,11 +40,14 @@ test('test Fifo enqueue', () => {
     const styles = new Styles();
     const fifo = new Fifo();
     expect(fifo).toBeInstanceOf(Fifo);
-    fifo.enqueue(styles.getStyle());
+// ***create Item***
+    fifo.enqueue(new ItemNode(styles.getStyle()));
     const first = fifo.items[0].name;
-    fifo.enqueue(styles.getStyle());
+// ***create Item***
+    fifo.enqueue(new ItemNode(styles.getStyle()));
     expect(fifo.items[0].name).toBe(first);
-    fifo.enqueue(styles.getStyle());
+// ***create Item***
+    fifo.enqueue(new ItemNode(styles.getStyle()));
     expect(fifo.items.length).toBe(3);
     const second = fifo.items[1].name;
     const third = fifo.items[2].name;
@@ -60,13 +66,16 @@ test('test Lifo enqueue', () => {
     const lifo = new Lifo();
     expect(lifo).toBeInstanceOf(Lifo);
     const itemName = styles.getStyle();
-    lifo.enqueue(itemName);
+// ***create Item***
+    lifo.enqueue(new ItemNode(itemName));
     expect(lifo.items.length).toBe(1);
     const first = lifo.items[0].name;
-    lifo.enqueue(styles.getStyle());
+// ***create Item***
+    lifo.enqueue(new ItemNode(styles.getStyle()));
     expect(lifo.items.length).toBe(2);
     expect(lifo.items[0].name).toBe(first);
-    lifo.enqueue(styles.getStyle());
+// ***create Item***
+    lifo.enqueue(new ItemNode(styles.getStyle()));
     expect(lifo.items.length).toBe(3);
     const second = lifo.items[1].name;
     lifo.dequeue();

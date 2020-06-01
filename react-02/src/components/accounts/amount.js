@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { ThemeContext } from '../theme/ThemeContext';
 
 function Options(props) {
     return (
@@ -36,7 +37,12 @@ function Amount (props) {
         // console.log('this.accounts:'+props.accounts);
         const accts = props.accounts.slice();
         return(
-            <div className="divBox">
+            <ThemeContext.Consumer>{(context) => {
+                const {isLightTheme,light,dark,toggleTheme} = context;
+                const theme = isLightTheme ? light : dark;
+                
+                return(
+            <div className="divBox" style={{background: theme.bg}}>
                 <span id="amount">Amount</span>
                 <input id="amtInput" type="number" onChange={e => setInput(e.target.value)}/><br/>
                 <output id="errMsg" className="error">{props.error}</output><br/>
@@ -59,7 +65,10 @@ function Amount (props) {
                 
                 
             </div>
-        )
+        )}}            
+        </ThemeContext.Consumer>
+        
+    )
     
     
 }
