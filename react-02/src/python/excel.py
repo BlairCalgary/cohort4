@@ -17,11 +17,17 @@ def breakIntoDict():
     # print(builtDict)
     return builtDict
 
-# returns the customer ID (from invoice dictionary)
+# returns the customer ID(from invoice dictionary)
 def getCustID(invoice) :
     for inv in xlDict['invoices']:
         if invoice == xlDict['invoices'][inv]['Invoice']:
             return xlDict['invoices'][inv]['Customer']
+
+# returns the date (from invoice dictionary)
+def getDate(invoice):
+    for inv in xlDict['invoices']:
+        if invoice == xlDict['invoices'][inv]['Invoice']:
+            return xlDict['invoices'][inv]['Date']
 
 # returns the customer name (from customers dictionary)
 def getCustName(custID):
@@ -67,6 +73,7 @@ def genReport(invoiceReq):
     # Invoice number (from invoice dictionary)
     invReport['invoice'] = invoiceReq
     invReport['cust ID'] = getCustID(invoiceReq)
+    invReport['date'] = getDate(invoiceReq)
     invReport['customer'] = getCustName(invReport['cust ID'])
     myInvLines = getInvLines(invoiceReq)
     # print(myInvLines)
@@ -79,6 +86,7 @@ def printInvoice(invObj):
     with open(invoiceFile+'.txt','w') as invoice:
         # report.write(b[0]+'-'+b[1]+':'+str(tupleDict[b])+'\n')
         invoice.write('Invoice: '+str(invObj['invoice'])+'\n')
+        invoice.write('Date: '+str(invObj['date'].date())+'\n')
         invoice.write('Customer: '+invObj['customer']+'\n')
         invoice.write('Customer ID: '+str(invObj['cust ID'])+'\n\n')
         invoice.write("{: <5} {: <31} {: <8}\n".format('Qty:','Product:','Price:'))
@@ -93,6 +101,7 @@ def printInvoice(invObj):
         invoice.write("{: >44}\n".format('TOTAL:'))
         total = round(total,2)
         invoice.write("{: >44}\n".format(total))
+
 
 
 xlDict = breakIntoDict()
@@ -110,6 +119,6 @@ invoiceReq = 0
 if __name__ == "__main__":
     while invoiceReq not in invoiceList:
         invoiceReq = int(input('Enter existing invoice:'))
-
-invObj = genReport(invoiceReq)
-printInvoice(invObj)
+    invObj = genReport(invoiceReq)
+    printInvoice(invObj)
+    

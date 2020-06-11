@@ -1,4 +1,5 @@
-from excel import breakIntoDict, getCustID, getCustName, getInvLines, getProdPrice
+from excel import breakIntoDict, getCustID, getCustName, getInvLines, getProdPrice, getDate
+import datetime
 
 testDict = breakIntoDict()
 
@@ -30,4 +31,9 @@ def test_getProdPrice():
     assert(dictOne[1]['qty'])==1
     assert(dictOne[2]['product'])=='Cabin - Sunshine Rain'
     assert(dictOne[3]['price'])==20.5
+
+def test_getDate():
+    date = getDate(100).date() 
+    targetdate = datetime.date(2020,6,9)
+    assert(date)==targetdate
     
