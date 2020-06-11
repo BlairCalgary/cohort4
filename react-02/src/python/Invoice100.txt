@@ -1,0 +1,11 @@
+Invoice: 100
+Customer: Blair
+Customer ID: 1
+
+Qty:  Product:                        Price:  
+====  ========                        ======  
+1     Banded Peak - Southern Aspect   18.99   
+1     Cabin - Supersaturation         16      
+1     Cabin - Sunshine Rain           16      
+                                      TOTAL:
+                                       50.99
