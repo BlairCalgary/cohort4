@@ -1,0 +1,11 @@
+Invoice: 105
+Date: 2020-06-11
+Customer: Greg
+Customer ID: 2
+
+Qty:  Product:                        Price:  
+====  ========                        ======  
+3     Establishment - Fat Sherpa      20.5    
+2     Establishment - Mellow Gold     17      
+                                      TOTAL:
+                                        37.5

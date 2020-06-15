@@ -1,4 +1,17 @@
 from openpyxl import load_workbook
+# from openpyxl.worksheet.datavalidation import DataValidation
+# from openpyxl.utils import quote_sheetname
+
+# def data_validation():
+#     wb = load_workbook('excel.xlsx')
+#     ws = wb['product']
+#     print(ws)
+#     dvDecimal = DataValidation(type="decimal")
+#     dvDecimal.add('C2:C10')
+#     ws.add_data_validation(dvDecimal)
+#     print(dvDecimal.error)
+
+# data_validation()
 
 def breakIntoDict():
     wb = load_workbook('excel.xlsx')

@@ -1,7 +1,16 @@
 from excel import breakIntoDict, getCustID, getCustName, getInvLines, getProdPrice, getDate
+from openpyxl.worksheet.datavalidation import DataValidation
+from openpyxl.utils import quote_sheetname
 import datetime
 
 testDict = breakIntoDict()
+
+def data_validation():
+    dvDecimal = DataValidation(type="decimal", formula1="{0}!$C$1:$C$10".format(quote_sheetname("product")), allow_blank=True)
+    print(dvDecimal)
+    # dvDate = DataValidation(type="date", allow_blank=True)
+    # dvString = DataValidation(type="text", allow_blank=True)
+    # dvWholeNumber = DataValidation(type="whole", allow_blank=True)
 
 def test_getCustID():
     assert(getCustID(100))==1

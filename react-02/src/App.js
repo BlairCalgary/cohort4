@@ -3,6 +3,7 @@ import Icon from './components/Icon.js';
 import Tictactoe from './components/tictactoe/tictactoe.js';
 import Accounts from './components/accounts/accounts.js';
 import Cities from './components/cities/cities.js';
+import API from './components/api/API.js';
 import { Queue } from './components/queue/queue.js';
 import { LinkedListComp } from './components/linkedlist/linkedlist.js';
 
@@ -17,6 +18,7 @@ import linkedListLogo from './linkedlist.svg';
 import tictactoeLogo from './tictactoe.svg';
 import bankLogo from './bank.svg';
 import settingsLogo from './settings.svg';
+import apiLogo from './settings.svg';
 
 // import { themes, ThemeContext } from './components/theme/theme-context.js';
 
@@ -59,6 +61,11 @@ const iconsArr = [
     key: 7,
     icon: settingsLogo,
     iconName: 'settings'
+  },
+  {
+    key: 8,
+    icon: apiLogo,
+    iconName: 'api'
   },
 ]
 
@@ -122,6 +129,9 @@ class App extends Component {
         break;
       case 'settings':
         comp = <Theme />;
+        break;
+      case 'api':
+        comp = <API />;
         break;
       default:
         comp = <img src={symLogo}

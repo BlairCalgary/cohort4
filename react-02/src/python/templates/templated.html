@@ -1,0 +1,16 @@
+<!doctype html>
+<title>Hello from Flask</title>
+
+{% if dict %}
+  {% for item in dict %}
+    <dl><strong>{{ item|e }}</strong></dl>
+        {% for element in dict[item] %}
+            <dt>{{ element }}:</dt>
+            {% for key in dict[item][element] %}
+                <dd>{{ key }}: {{ dict[item][element][key]}}</dd>
+                {% endfor %} 
+        {% endfor %}
+  {% endfor %}
+{% else %}
+  <h1>ERROR: flaskDict missing!</h1>
+{% endif %}

@@ -1,0 +1,10 @@
+Invoice: 103
+Date: 2020-06-10
+Customer: Roman
+Customer ID: 4
+
+Qty:  Product:                        Price:  
+====  ========                        ======  
+4     Banded Peak - Southern Aspect   18.99   
+                                      TOTAL:
+                                       18.99
