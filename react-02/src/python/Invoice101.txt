@@ -1,0 +1,12 @@
+Invoice: 101
+Date: 2020-06-09
+Customer: Greg
+Customer ID: 2
+
+Qty:  Product:                        Price:  
+====  ========                        ======  
+1     Annex - Forward Progress        20      
+1     Establishment - Fat Sherpa      20.5    
+1     Establishment - Mellow Gold     17      
+                                      TOTAL:
+                                        57.5

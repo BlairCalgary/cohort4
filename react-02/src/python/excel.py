@@ -36,86 +36,48 @@ def getCustID(invoice) :
         if invoice == xlDict['invoices'][inv]['Invoice']:
             return xlDict['invoices'][inv]['Customer']
 
-# returns the date (from invoice dictionary)
-def getDate(invoice):
-    for inv in xlDict['invoices']:
-        if invoice == xlDict['invoices'][inv]['Invoice']:
-            return xlDict['invoices'][inv]['Date']
+# one = dictionary, two = dictionary, same = dict one column, match = dict two column, where = dictionary two column, estar = match for where
+def innerjoin(one,two,same,match,where=None,estar=None):
+    outDict = {}
+    for oneRow in one:
+        for twoRow in two:
+            if one[oneRow][same] == two[twoRow][match]:
+                try:
+                    theTest = (two[twoRow][where] == estar)
+                except:
+                    theTest = False
+                if (theTest) or where==None:
+                    index = len(outDict) +1
+                    outDict[index] = {}
+                    for item in one[oneRow]:
+                            # print(item,one[oneRow][item])
+                            outDict[index][item] = one[oneRow][item]
+                    for element in two[twoRow]:
+                            # print(element,two[twoRow][element])
+                            outDict[index][element] = two[twoRow][element]
+    return outDict
 
-# returns the customer name (from customers dictionary)
-def getCustName(custID):
-    for cust in xlDict['customers']:
-        if custID == xlDict['customers'][cust]['ID']:
-            return xlDict['customers'][cust]['Name']
-
-# return the product ID and qty (from invoice_line_items)
-# format [(product ID,qty),(p,q)...(p,q)]
-def getInvLines(invoice):
-    prodQtyPairs = []
-    for invLine in xlDict['invoice_line_items']:
-        if invoice == xlDict['invoice_line_items'][invLine]['Invoice']:
-            prod = xlDict['invoice_line_items'][invLine]['Product']
-            qty = xlDict['invoice_line_items'][invLine]['Quantity']
-            prodQtyPairs.append(tuple((prod,qty)))
-    return prodQtyPairs        
-
-# returns product qty, name, price (from product dictionary)
-# format {1: {'qty': #, 'product': 'AAA', 'price':##.##}}
-#        {2: {'qty': #, 'product': 'AAA', 'price':##.##}}
-def getProdPrice(prodQty):
-    counter = 1
-    invDict = {}
-    for item in prodQty:
-        for product in xlDict['product']:
-            if item[0] == xlDict['product'][product]['ID']:
-                invDict[counter] = {}
-                ppName = xlDict['product'][product]['Name'] 
-                ppPrice = xlDict['product'][product]['Price']
-                ppQty = item[1]
-                invDict[counter]['qty'] = ppQty
-                invDict[counter]['product'] = ppName
-                invDict[counter]['price'] = ppPrice
-                counter=counter+1
-    return invDict
-
-# total price (calculated)
-
-def genReport(invoiceReq):
-    invReport = {}
-    # Invoice requires:
-    # Invoice number (from invoice dictionary)
-    invReport['invoice'] = invoiceReq
-    invReport['cust ID'] = getCustID(invoiceReq)
-    invReport['date'] = getDate(invoiceReq)
-    invReport['customer'] = getCustName(invReport['cust ID'])
-    myInvLines = getInvLines(invoiceReq)
-    # print(myInvLines)
-    invReport['items'] = {}
-    invReport['items'] = getProdPrice(myInvLines)
-    return invReport
 
 def printInvoice(invObj):
-    invoiceFile = 'Invoice'+str(invObj['invoice'])
+    invoiceFile = 'Invoice'+str(invObj[1]['Invoice'])
     with open(invoiceFile+'.txt','w') as invoice:
         # report.write(b[0]+'-'+b[1]+':'+str(tupleDict[b])+'\n')
-        invoice.write('Invoice: '+str(invObj['invoice'])+'\n')
-        invoice.write('Date: '+str(invObj['date'].date())+'\n')
-        invoice.write('Customer: '+invObj['customer']+'\n')
-        invoice.write('Customer ID: '+str(invObj['cust ID'])+'\n\n')
+        invoice.write('Invoice: '+str(invObj[1]['Invoice'])+'\n')
+        invoice.write('Date: '+str(invObj[1]['Date'].date())+'\n')
+        invoice.write('Customer: '+invObj[1]['Name']+'\n')
+        invoice.write('Customer ID: '+str(invObj[1]['Customer'])+'\n\n')
         invoice.write("{: <5} {: <31} {: <8}\n".format('Qty:','Product:','Price:'))
         invoice.write("{: <5} {: <31} {: <8}\n".format('====','========','======'))
         total = 0
-        for row in invObj['items']:
-            qty = str(invObj['items'][row]['qty'])
-            product = invObj['items'][row]['product']
-            total+=invObj['items'][row]['price']
-            price = str(invObj['items'][row]['price'])
+        for row in invObj:
+            qty = str(invObj[row]['Quantity'])
+            product = invObj[row]['Beer Name']
+            total+=invObj[row]['Price']
+            price = str(invObj[row]['Price'])
             invoice.write("{: <5} {: <31} {: <8}\n".format(qty,product,price))
         invoice.write("{: >44}\n".format('TOTAL:'))
         total = round(total,2)
         invoice.write("{: >44}\n".format(total))
-
-
 
 xlDict = breakIntoDict()
 
@@ -132,6 +94,10 @@ invoiceReq = 0
 if __name__ == "__main__":
     while invoiceReq not in invoiceList:
         invoiceReq = int(input('Enter existing invoice:'))
-    invObj = genReport(invoiceReq)
-    printInvoice(invObj)
-    
+    first = innerjoin(xlDict['customers'],xlDict['invoices'],'ID','Customer','Invoice',invoiceReq)
+    second = innerjoin(first,xlDict['invoice_line_items'],'Invoice','Invoice','Invoice',invoiceReq)
+    third = innerjoin(second,xlDict['product'],'Product','ID')
+    print(third)
+    printInvoice(third)
+
+

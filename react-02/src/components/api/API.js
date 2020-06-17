@@ -3,7 +3,7 @@ import React, {useState,useEffect,Fragment} from 'react';
 
 
 function API () {
-    const [display, setDisplay] = useState([<h3>test</h3>])
+    const [display, setDisplay] = useState([])
     const loadJSON = async () => {
         const url = 'http://127.0.0.1:5000/datadump'
         const data = await fetch(url)

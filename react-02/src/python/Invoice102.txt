@@ -1,0 +1,10 @@
+Invoice: 102
+Date: 2020-06-10
+Customer: Larry
+Customer ID: 3
+
+Qty:  Product:                        Price:  
+====  ========                        ======  
+3     Banded Peak - Plainsbreaker     17.99   
+                                      TOTAL:
+                                       17.99
