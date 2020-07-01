@@ -10,9 +10,13 @@ const capitals = new Capitals;
 
 // Load server data to use this session
 async function loadServerData() {
-    const resp = await cityFetch.all();
-    for (const obj in resp) {
-        controller.createCity(new City(resp[obj]));
+    try {
+        const resp = await cityFetch.all();
+        for (const obj in resp) {
+            controller.createCity(new City(resp[obj]));
+        }
+    } catch(err) {
+        console.log("Did not load server data:",err)
     }
 };
 loadServerData();
@@ -102,13 +106,6 @@ function updatePage() {
     mostNorthOutput.textContent = controller.getMostNorthern();
     mostSouthOutput.textContent = controller.getMostSouthern();
 
-    // displayCityOutput.textContent = "";
-    // displayLatOutput.textContent = "";
-    // displayLongOutput.textContent = "";
-    // displayPopOutput.textContent = "";
-    // displayKeyOutput.textContent = "";
-    // displayHemOutput.textContent = "";
-    // displaySetOutput.textContent = "";
 }
 
 function newKey() {
@@ -129,8 +126,6 @@ async function addCity() {
     (lat.value==="" ? lat.classList.add('userInput') :'');
     (long.value==="" ? long.classList.add('userInput') :'');
     (pop.value==="" ? pop.classList.add('userInput') :'');
-    
-
     if (cityName.value==="" ||
         lat.value==="" ||
         long.value==="" ||
@@ -160,30 +155,17 @@ async function addCity() {
     }
 }
 
-// addCity();
-// addCity().then(() => console.log(newKey()));
-
 // Initialize server on load.
 async function init() {
-    await cityFetch.load();
-    await updatePage();
-};
-init();
-
-function showCity(name) {
-    for (const keyCount in controller.cities) {
-        if (controller.cities[keyCount].name===name) {
-            displayCityOutput.textContent = controller.cities[keyCount].name;
-            displayLatOutput.textContent = controller.cities[keyCount].latitude;
-            displayLongOutput.textContent = controller.cities[keyCount].longitude;
-            displayPopOutput.textContent = controller.cities[keyCount].population;
-            displayKeyOutput.textContent = controller.cities[keyCount].key;
-            displayHemOutput.textContent = controller.cities[keyCount].whichSphere();
-            displaySetOutput.textContent = controller.cities[keyCount].howBig();
-        } 
+    try {
+        await cityFetch.load();
+        await updatePage();
+    } catch (err) {
+        console.log("Did not load server data:", err);
     }
     
-}
+};
+init();
 
 async function fetchCapital(city){
     const rCity = await fetch(`https://restcountries.eu/rest/v2/capital/`+city);
@@ -195,22 +177,13 @@ async function fetchCapital(city){
     clearDisplay();
 }
 
-// rebuildCards();
-
-// window.addEventListener('click', (() => {
-//     updatePage();
-// }));
-
 function moveOutCity(num, city) {
     if (num!="") {
         for (const keyCount in controller.cities) {
             if (controller.cities[keyCount].name===city) {
                 controller.cities[keyCount].movedOut(num);
-                // console.log('city object: ', controller.cities[keyCount]);
                 cityFetch.update(controller.cities[keyCount]);
-                // console.log(num+' people move out from '+city);
                 updatePage();
-                // clearDisplay();
             }
         }
         
@@ -225,9 +198,7 @@ function moveInCity(num, city) {
             if (controller.cities[keyCount].name===city) {
                 controller.cities[keyCount].movedIn(num);
                 cityFetch.update(controller.cities[keyCount]);
-                // console.log(num+' people move in from '+city);
                 updatePage();
-                // clearDisplay();
             }
         }
 
@@ -238,10 +209,6 @@ function moveInCity(num, city) {
 
 rightPanel.addEventListener('click', ((e) => {
     switch(e.target.textContent) {
-        // case 'Show':
-        //     const name = e.target.previousSibling.textContent
-        //     showCity(name);
-        //     break;
         case '-':
             const varMoveOut = e.target.previousSibling.previousSibling.value;
             const varCity = e.target.parentNode.parentNode.childNodes[0].childNodes[0].textContent;
@@ -258,7 +225,6 @@ rightPanel.addEventListener('click', ((e) => {
     if (e.target.className==='trash') {
         let targetCity = e.target.parentNode.childNodes[0].textContent
         confirmDelete(targetCity);
-        // alert('Delete ' + targetCity +'?')
     }
 }));
 
@@ -270,8 +236,6 @@ function confirmDelete(City) {
                 const displayKey = controller.cities[keyCount].key;
                 cityFetch.delete(displayKey);
                 controller.deleteCity(displayKey);
-                // console.log(controller.cities[keyCount].name, City);
-                
             } 
         }
         
@@ -305,24 +269,6 @@ randomCity.addEventListener('click', (() => {
     const rando = Math.floor(Math.random() * capitals.capitals.length)
     fetchCapital(capitals.capitals[rando]);
 }));
-
-// displayDelCity.addEventListener('click', (() => {
-//     if (!displayKeyOutput.textContent==``) {
-//         cityFetch.delete(displayKeyOutput.textContent);
-//         controller.deleteCity(displayKeyOutput.textContent);
-
-//         clearDisplay();
-
-//         updatePage();
-        
-//     } else {
-//         console.log(`select 'show' form a city card on the right pane`);
-//     }
-// }));
-
-// cityAdd.addEventListener('click', (() => {
-//     console.log('Add City');
-// }));
 
 document.addEventListener('DOMContentLoaded', async () => {
     const caps = await fetch(`https://restcountries.eu/rest/v2/regionalbloc/eu`);

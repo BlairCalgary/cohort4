@@ -64,14 +64,21 @@
     display: inline-flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 .rightCityCard {
     display: inline-flex;
     flex-direction: row;
+    align-items: center;
+    border: solid 1px gray;
+    border-radius: 0.5em;
+    padding-left: 5px;
 }
 .moveInOut {
-    border-style: none;
-    border-bottom: solid 1px;
+    border-style: solid 1px;
+    width: 4em;
+    height: 100%;
+    /* border-bottom: solid 1px; */
     /* border-bottom: 1px; */
 }
 #displayDetailsDiv {
@@ -108,7 +115,7 @@
 .Card {
     /* display: inline-flex; */
     display: grid;
-    grid-template-rows: 50% 50%;
+    /* grid-template-rows: 50% auto 50%; */
     
     /* grid-template-columns: auto auto 80px; */
 }
@@ -122,6 +129,17 @@
     padding: 0.5em;
     margin: 0.5em;
 }
+.smallbtn {
+    background-color: powderblue;
+    width: 2em;
+    resize: none;
+    border-radius: 0.5em;
+    border: none;
+
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
 
 #errMsg {
     color: red;
@@ -138,4 +156,15 @@
 #acctName {
     grid-area: 1 / 1 / 2 / 2;
     align-self: center;
+}
+
+.trash {
+    background-image: url(delete.svg);
+    height: 30px;
+    width: 30px;
+    border-style: none;
+}
+
+.userInput {
+    border-color: red;
 }
