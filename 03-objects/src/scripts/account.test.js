@@ -50,9 +50,9 @@ test('total of account balances', () => {
 });
 
 test('account maximum', () => {
-    expect(acctCtrl.acctMax()).toBe(100);
+    expect(acctCtrl.acctMax()).toBe('sav - 100');
 });
 
 test('account minimum', () => {
-    expect(acctCtrl.acctMin()).toBe(25);
+    expect(acctCtrl.acctMin()).toBe('chq - 25');
 });

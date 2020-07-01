@@ -40,10 +40,8 @@ export class AccountController {
         switch (this.accts.length) {
             case 0:
                 return null;
-                break;
             case 1:
                 return this.accts[0].name + ' - ' + this.accts[0].balance;
-                break;
             default:
                 for (i = 0; i < this.accts.length-1 ; i++) {   
                     (this.accts[i].balance > this.accts[i+1].balance ?
@@ -60,10 +58,8 @@ export class AccountController {
         switch (this.accts.length) {
             case 0:
                 return null;
-                break;
             case 1:
                 return this.accts[0].name + ' - ' + this.accts[0].balance;
-                break;
             default:
                 for (i = 0; i < this.accts.length-1 ; i++) {   
                     (this.accts[i].balance < this.accts[i+1].balance ?
