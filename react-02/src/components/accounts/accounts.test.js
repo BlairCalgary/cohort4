@@ -1,37 +1,68 @@
 import React from 'react';
 import { fireEvent, render, screen, act } from "@testing-library/react";
-import {Account} from './account';
-import {AccountController} from './account';
-import {Tools} from './tools.js'
+import Accounts from './accounts';
+// import {AccountController} from './accounts';
+
+// jest.mock('./accounts');
+
+// beforeEach(() => {
+//     Accounts.mockClear();
+// })
+
+// test('test', () => {
+//     const spy = jest.spyOn(Accounts, 'errorMsg');
+//     const errMsg = Accounts.errorMsg();
+
+//     expect(spy).toHaveBeenCalled(1);
+//     expect(errMsg).toBe("");
+    
+// });
 
 test('test the constructor', () => {
-    const account = new Account('Chequing', 25);
-    expect(account.name).toBe('Chequing');
-    expect(account.balance).toBe(25);
+    const account = new Accounts();
+    expect(account.state.accounts[0].name).toBe('Chequing');
+    expect(account.state.accounts[0].balance).toBe(25);
+    
 });
 
 test('does deposit increment balance?', () => {
-    const account = new Account('Chequing', 25);
-    account.deposit(10);
-    expect(account.balance).toBe(35);
-    account.deposit(10);
-    expect(account.balance).toBe(45);
+    const account = new Accounts();
+    expect(account.state.accounts[0].balance).toBe(25);
+    account.deposit('Chequing',10);
+    expect(account.state.accounts[0].balance).toBe(35);
+    account.deposit('Chequing',10);
+    expect(account.state.accounts[0].balance).toBe(45);
 });
 
 test('does withdraw decrement balance?', () => {
-    const account = new Account('Chequing', 25);
-    account.withdraw(10);
-    expect(account.balance).toBe(15);
-    account.withdraw(10);
-    expect(account.balance).toBe(5);
+    const account = new Accounts();
+    expect(account.state.accounts[0].balance).toBe(25);
+    account.withdraw('Chequing',10);
+    expect(account.state.accounts[0].balance).toBe(15);
+    account.withdraw('Chequing',10);
+    expect(account.state.accounts[0].balance).toBe(5);
 });
 
-test('test the constructor', () => {
-    const acctCtrl = new AccountController();
-    const account = new Account('Chequing', 25);
-    expect(acctCtrl.accts.length).toBe(0);
-    acctCtrl.addAcct(account);
-    expect(acctCtrl.accts.length).toBe(1);
+test('does addAcct add account', () => {
+    const account = new Accounts();
+    expect(account.state.accounts[0].name).toBe('Chequing');
+    expect(account.state.accounts[0].balance).toBe(25);
+    
+    const saving = {"name":"Saving","balance":100};
+    jest.mock('./accounts');
+    account.addAcct(saving);
+    expect(account.addAcct).toHaveBeenCalledTimes(1);
+    
+    
+    
+});
+
+test('test the error message', () => {
+    const account = new Accounts();
+    expect(account.state.error).toBe("");
+    account.errorMsg("test");
+    expect(account.state.error).toBe("test");
+    
 });
 
 test('remove account', () => {

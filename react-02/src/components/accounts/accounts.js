@@ -17,6 +17,7 @@ class Accounts extends React.Component {
             ],
             error: '',
         }
+        this.errorMsg = this.errorMsg.bind(this)
     }
     addAcct = (acct) => {
         const acctsClone = [...this.state.accounts];
@@ -36,7 +37,6 @@ class Accounts extends React.Component {
                 this.errorMsg('Cannot close all accounts.')
             }
         }
-
     }
     deposit = (account, amount) => {
         const acctsClone = [...this.state.accounts];
@@ -86,7 +86,7 @@ class Accounts extends React.Component {
     render() {
         return (
             <ThemeContext.Consumer>{(context) => {
-                const { isLightTheme, light, dark, toggleTheme } = context;
+                const { isLightTheme, light, dark } = context;
                 const theme = isLightTheme ? light : dark;
 
 

@@ -23,7 +23,7 @@ class AccountMgmt extends React.Component {
     render() {
         return (
             <ThemeContext.Consumer>{(context) => {
-                const { isLightTheme, light, dark, toggleTheme } = context;
+                const { isLightTheme, light, dark } = context;
                 const theme = isLightTheme ? light : dark; return (
                     <div className="divBox" style={{background: theme.bg}}>
                         <span id="idAccount">Account Management</span><br />

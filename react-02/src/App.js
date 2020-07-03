@@ -72,18 +72,6 @@ const iconsArr = [
 class App extends Component {
   constructor(props) {
     super(props);
-    
-    // this.toggleTheme = () => {
-    //   console.log('in toggletheme')
-      
-    //   this.setState(state => ({
-    //     theme:
-    //       (state.theme === themes.dark
-    //         ? themes.light
-    //         : themes.dark),
-    //   }));
-    // }
-    
     this.state = {
       // theme: themes.light,
       toggleTheme: this.toggleTheme,
