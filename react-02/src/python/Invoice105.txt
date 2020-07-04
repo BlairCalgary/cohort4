@@ -8,4 +8,4 @@ Qty:  Product:                        Price:
 3     Establishment - Fat Sherpa      20.5    
 2     Establishment - Mellow Gold     17      
                                       TOTAL:
-                                        37.5
+                                        95.5

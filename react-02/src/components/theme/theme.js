@@ -1,12 +1,18 @@
-import React, {useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import ThemeTogglerButton from './theme-toggler-button';
+import About from './about';
 
-
-function Theme () {
+function Theme() {
     return (
         <div>
-            <ThemeTogglerButton />
+            <div>
+                <ThemeTogglerButton />
+            </div>
+            <div>
+                <About/>
+            </div>
         </div>
+
     )
 }
 

@@ -4,6 +4,7 @@ import { UserInput } from './userinput.js';
 import { CardSelection } from './cardselection.js';
 import { LinkedList } from './index';
 import { ThemeContext } from '../theme/ThemeContext';
+import About from './about.js'
 
 // Using JDENTICON
 // 
@@ -70,27 +71,33 @@ function LinkedListComp() {
 
             return (
                 <div>
-                    <div className="divBorder justCont" style={{background: theme.ui}}>
-                        <UserInput
-                            add={add}
-                        />
-                        <CardSelection
-                            first={first}
-                            next={next}
-                            prev={prev}
-                            last={last}
-                            delete={deleteCard}
-                        />
-                        {/* Linked List{linkedlist.length} */}
-                        {/* <button onClick={()=>add()}/>
+                    <div>
+                        <div className="divBorder justCont" style={{ background: theme.ui }}>
+                            <UserInput
+                                add={add}
+                            />
+                            <CardSelection
+                                first={first}
+                                next={next}
+                                prev={prev}
+                                last={last}
+                                delete={deleteCard}
+                            />
+                            {/* Linked List{linkedlist.length} */}
+                            {/* <button onClick={()=>add()}/>
                 <button onClick={()=>next()}/>
                 <button onClick={()=>console.log(linkedlist.active.name)}/> */}
+                        </div>
+                        <div className="justCont">
+                            <Cards list={linkedlist} />
+                            {/* length={linkedlist} */}
+                        </div>
                     </div>
-                    <div className="justCont">
-                        <Cards list={linkedlist} />
-                        {/* length={linkedlist} */}
+                    <div>
+                        <About/>
                     </div>
                 </div>
+
             )
         }}
         </ThemeContext.Consumer>

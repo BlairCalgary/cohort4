@@ -3,6 +3,7 @@ import AccountList from './accountlist.js'
 import AccountMgmt from './accountmgmt.js'
 import Tools from './tools.js'
 import Amount from './amount.js'
+import About from './about.js'
 import { ThemeContext } from '../theme/ThemeContext';
 
 class Accounts extends React.Component {
@@ -21,8 +22,13 @@ class Accounts extends React.Component {
     }
     addAcct = (acct) => {
         const acctsClone = [...this.state.accounts];
-        acctsClone.push({ "name": acct.name, "balance": acct.balance })
-        this.setState({ accounts: acctsClone });
+        if (acct.balance < 0) {
+            this.errorMsg('Account balance cannot be negative.')
+
+        } else {
+            acctsClone.push({ "name": acct.name, "balance": acct.balance })
+            this.setState({ accounts: acctsClone });
+        }
     }
     removeAcct = (acctName) => {
         const acctsClone = [...this.state.accounts];
@@ -91,16 +97,22 @@ class Accounts extends React.Component {
 
 
                 return (
-                    <div id="container" >
-                        <div id="left" className="divBorder" style={{background: theme.ui}}>
-                            <AccountList accounts={this.state.accounts} removeAcct={this.removeAcct} />
-                            <AccountMgmt addAcct={this.addAcct} errorMsg={this.errorMsg} />
-                            <Tools accounts={this.state.accounts} />
+                    <div>
+                        <div id="container" >
+                            <div id="left" className="divBorder" style={{ background: theme.ui }}>
+                                <AccountList accounts={this.state.accounts} removeAcct={this.removeAcct} />
+                                <AccountMgmt addAcct={this.addAcct} errorMsg={this.errorMsg} />
+                                <Tools accounts={this.state.accounts} />
+                            </div>
+                            <div id="actionPanel" className="divBorder" style={{ background: theme.ui }}>
+                                <Amount withdraw={this.withdraw} deposit={this.deposit} accounts={this.state.accounts} errorMsg={this.errorMsg} error={this.state.error} />
+                            </div>
                         </div>
-                        <div id="actionPanel" className="divBorder" style={{background: theme.ui}}>
-                            <Amount withdraw={this.withdraw} deposit={this.deposit} accounts={this.state.accounts} errorMsg={this.errorMsg} error={this.state.error} />
+                        <div>
+                            <About />
                         </div>
                     </div>
+
                 )
             }}
             </ThemeContext.Consumer>

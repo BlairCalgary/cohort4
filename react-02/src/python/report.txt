@@ -1,0 +1,28 @@
+CLASS - SECTOR : RES_CNT
+========================
+Residential-SOUTH:21500
+Residential-CENTRE:4744
+Residential-NORTHEAST:5801
+Residential-NORTHWEST:11706
+Residential-EAST:7814
+Residential-WEST:9943
+Residential-NORTH:11566
+Residential-SOUTHEAST:9244
+Residual Sub Area-NORTHWEST:0
+Residual Sub Area-SOUTH:0
+Residual Sub Area-NORTHEAST:0
+Residual Sub Area-SOUTHEAST:0
+Residual Sub Area-EAST:0
+Residual Sub Area-WEST:0
+Residual Sub Area-CENTRE:0
+Residual Sub Area-NORTH:0
+Industrial-EAST:0
+Industrial-NORTHEAST:0
+Industrial-NORTHWEST:0
+Industrial-SOUTH:0
+Industrial-CENTRE:0
+Industrial-SOUTHEAST:0
+Industrial-NORTH:0
+Major Park-NORTHWEST:0
+Major Park-WEST:0
+Major Park-SOUTH:0

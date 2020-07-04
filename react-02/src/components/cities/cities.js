@@ -4,10 +4,11 @@ import TotalPop from './totalpop.js'
 import MostNorth from './mostnorth.js'
 import MostSouth from './mostsouth.js'
 import Cards from './cards.js'
+import About from './about.js'
 import { ThemeContext } from '../theme/ThemeContext';
 
-import {City} from './130d.js';
-import {CityFetch} from './130d.js';
+import { City } from './130d.js';
+import { CityFetch } from './130d.js';
 // import {Controller} from './130d.js';
 
 const cityFetch = new CityFetch();
@@ -35,30 +36,30 @@ class Cities extends React.Component {
     }
     deleteIt = (props) => {
         const City = props;
-        const confirmDelete = window.confirm("Delete " + City +"?");
+        const confirmDelete = window.confirm("Delete " + City + "?");
 
         const citiesClone = [...this.state.cities];
 
         if (confirmDelete) {
             for (const keyCount in citiesClone) {
-                if (citiesClone[keyCount].name===City) {
+                if (citiesClone[keyCount].name === City) {
                     const displayKey = citiesClone[keyCount].key;
                     cityFetch.delete(displayKey);
-                    
-                    citiesClone.splice(keyCount,1);
+
+                    citiesClone.splice(keyCount, 1);
                     this.setState({
                         cities: citiesClone,
                     })
                     // controller.deleteCity(displayKey);
-                    
-                    
-                } 
+
+
+                }
             }
-            
+
             // clearDisplay();
-    
+
             // updatePage();
-            
+
         }
 
         // console.log('in delete: ', props)
@@ -67,14 +68,14 @@ class Cities extends React.Component {
     moveIn = async (city, migration) => {
         const citiesClone = [...this.state.cities];
         for (const keyCount in citiesClone) {
-            if (citiesClone[keyCount].name===city) {
+            if (citiesClone[keyCount].name === city) {
                 const cityObj = JSON.parse(JSON.stringify(citiesClone[keyCount]));
-                cityObj.population=String(Number(cityObj.population)+Number(migration))
+                cityObj.population = String(Number(cityObj.population) + Number(migration))
                 // cityObj.population+=migration;
                 await cityFetch.update(cityObj);
 
                 citiesClone[keyCount] = cityObj;
-                this.setState({cities: citiesClone})
+                this.setState({ cities: citiesClone })
 
                 // console.log(cityObj);
                 break;
@@ -85,13 +86,13 @@ class Cities extends React.Component {
     moveOut = async (city, migration) => {
         const citiesClone = [...this.state.cities];
         for (const keyCount in citiesClone) {
-            if (citiesClone[keyCount].name===city) {
+            if (citiesClone[keyCount].name === city) {
                 const cityObj = JSON.parse(JSON.stringify(citiesClone[keyCount]));
-                cityObj.population=String(Number(cityObj.population)-Number(migration))
+                cityObj.population = String(Number(cityObj.population) - Number(migration))
                 // cityObj.population+=migration;
                 await cityFetch.update(cityObj);
                 citiesClone[keyCount] = cityObj;
-                this.setState({cities: citiesClone})
+                this.setState({ cities: citiesClone })
                 // console.log(cityObj);
                 break;
             }
@@ -112,13 +113,13 @@ class Cities extends React.Component {
         do {
             i++;
         }
-        while (keys.indexOf(String(i))>=0);
+        while (keys.indexOf(String(i)) >= 0);
         const newKey = String(i);
         cloneProps.key = newKey;
         await cityFetch.add(cloneProps);
         citiesClone.push(new City(cloneProps));
         this.setState({ cities: citiesClone });
-        
+
         // console.log(props.name);
     }
     render() {
@@ -129,29 +130,35 @@ class Cities extends React.Component {
 
 
                 return (
-            <div className="divBorder">
-                <div id="container" style={{background: theme.ui}}>
-                    <div id="leftPanel">
-                        <AddACity addCity={this.addCity} cities={this.state.cities}/>
+                    <div>
+                        <div className="divBorder">
+                            <div id="container" style={{ background: theme.ui }}>
+                                <div id="leftPanel">
+                                    <AddACity addCity={this.addCity} cities={this.state.cities} />
+                                </div>
+                                <div id="leftPanel">
+                                    <TotalPop cities={this.state.cities} />
+                                    <MostNorth cities={this.state.cities} />
+                                    <MostSouth cities={this.state.cities} />
+                                </div>
+                            </div>
+                            <div style={{ background: theme.ui }}>
+                                <Cards
+                                    cities={this.state.cities}
+                                    deleteIt={this.deleteIt}
+                                    moveInParent={this.moveIn}
+                                    moveOutParent={this.moveOut}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <About />
+                        </div>
                     </div>
-                    <div id="leftPanel">
-                        <TotalPop cities={this.state.cities}/>
-                        <MostNorth cities={this.state.cities}/>
-                        <MostSouth cities={this.state.cities}/>
-                    </div>
-                </div>
-                <div style={{background: theme.ui}}>
-                    <Cards
-                        cities={this.state.cities}
-                        deleteIt={this.deleteIt}
-                        moveInParent={this.moveIn}
-                        moveOutParent={this.moveOut}
-                    />
-                </div>
-            </div>  
-        )}}
-        </ThemeContext.Consumer>
-    )
+                )
+            }}
+            </ThemeContext.Consumer>
+        )
     }
 }
 

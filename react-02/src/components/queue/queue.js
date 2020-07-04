@@ -1,19 +1,20 @@
-import React, {useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Switch } from './switch.js';
 import { Card } from './card.js';
 import { FifoDisplay } from './fifodisplay.js';
 import { ItemNode, Styles, Fifo, Lifo } from './fifo.js'
 import { ThemeContext } from '../theme/ThemeContext';
+import About from './about.js'
 import './queue.css';
 const styles = new Styles();
-    
+
 function Queue() {
-    const [ toBeAdded, setToBeAdded ] = useState({});
-    const [ fifo, setFifo ] = useState(new Fifo());
-    const [ lifo, setLifo ] = useState(new Lifo());
-    const [ deleted, setDeleted ] = useState({});
-    const [ fifoActive, setFifoActive ] = useState(true);
-    
+    const [toBeAdded, setToBeAdded] = useState({});
+    const [fifo, setFifo] = useState(new Fifo());
+    const [lifo, setLifo] = useState(new Lifo());
+    const [deleted, setDeleted] = useState({});
+    const [fifoActive, setFifoActive] = useState(true);
+
     const toggle = () => {
         setFifoActive(!fifoActive)
     }
@@ -56,18 +57,18 @@ function Queue() {
                 setDeleted(trashed);
             }
         }
-        
+
         // const newItem = new ItemNode(styles.getStyle());
         // setToBeAdded(newItem);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         // const styles = new Styles();
         const newItem = new ItemNode(styles.getStyle());
         setToBeAdded(newItem);
 
     }
-    , []);
+        , []);
 
     return (
         <ThemeContext.Consumer>{(context) => {
@@ -75,73 +76,79 @@ function Queue() {
             const theme = isLightTheme ? light : dark;
 
 
-            return(
-        <div className="q-divBorder" style={{background: theme.ui}}>
-            <div className="q-control" style={{background: theme.bg}}>
-                <Switch
-                    add={addItem}
-                    delete={deleteItem}
-                    fifoActive={fifoActive}
-                    setFifoActive={setFifoActive}
+            return (
+                <div>
+                    <div className="q-divBorder" style={{ background: theme.ui }}>
+                        <div className="q-control" style={{ background: theme.bg }}>
+                            <Switch
+                                add={addItem}
+                                delete={deleteItem}
+                                fifoActive={fifoActive}
+                                setFifoActive={setFifoActive}
 
-                />
-            </div>
-            <div className="q-queues q-control" style={{background: theme.bg}}>
-                <div className="q-elBorder">
-                    To Be Added
-                    <Card item={toBeAdded}/>
-                    {/* {toBeAdded.name} */}
-                </div>
-                <div className="q-elBorder">
-                    Last Deleted
-                    <Card item={deleted}/>
-                </div>
-                <div className="q-arrow">
-                    ⬇
-                </div>
-                <div className="q-arrow">
-                    ↕
-                </div>
-                <div className="q-stack">
-                    <div className="q-leftwall">
+                            />
+                        </div>
+                        <div className="q-queues q-control" style={{ background: theme.bg }}>
+                            <div className="q-elBorder">
+                                To Be Added
+                                <Card item={toBeAdded} />
+                                {/* {toBeAdded.name} */}
+                            </div>
+                            <div className="q-elBorder">
+                                Last Deleted
+                                <Card item={deleted} />
+                            </div>
+                            <div className="q-arrow">
+                                ⬇
+                            </div>
+                            <div className="q-arrow">
+                                ↕
+                            </div>
+                            <div className="q-stack">
+                                <div className="q-leftwall">
 
+                                </div>
+                                <div>
+                                    <FifoDisplay fifo={fifo} />
+                                </div>
+                                <div className="q-rightwall">
+
+                                </div>
+                            </div>
+                            <div className="q-stack">
+                                <div className="q-leftwall">
+
+                                </div>
+                                <div className="q-bottom">
+                                    <FifoDisplay fifo={lifo} />
+                                </div>
+                                <div className="q-rightwall">
+
+                                </div>
+                            </div>
+                            <div className="q-arrow">
+                                ⬇
+                            </div>
+                            <div>
+
+                            </div>
+                            <div className="q-labels">
+                                FIFO
+                            </div>
+                            <div className="q-labels">
+                                LIFO
+                            </div>
+                        </div>
                     </div>
                     <div>
-                        <FifoDisplay fifo={fifo}/>
-                    </div>
-                    <div className="q-rightwall">
-                        
+                        <About/>
                     </div>
                 </div>
-                <div className="q-stack">
-                    <div className="q-leftwall">
 
-                    </div>
-                    <div className="q-bottom">
-                        <FifoDisplay fifo={lifo}/>
-                    </div>
-                    <div className="q-rightwall">
-                        
-                    </div>
-                </div>
-                <div className="q-arrow">
-                ⬇
-                </div>
-                <div>
-                    
-                </div>
-                <div className="q-labels">
-                    FIFO
-                </div>
-                <div className="q-labels">
-                    LIFO
-                </div>
-            </div>
-        </div>
-    )
-}}
-</ThemeContext.Consumer>
-);
+            )
+        }}
+        </ThemeContext.Consumer>
+    );
 }
 
 export { Queue }

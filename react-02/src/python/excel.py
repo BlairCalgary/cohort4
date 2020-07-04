@@ -27,7 +27,7 @@ def breakIntoDict():
                     builtDict[sheet][rowCount][wb[sheet][1][col].value] = cell.value
                     col += 1
             rowCount += 1
-    # print(builtDict)
+    print(builtDict)
     return builtDict
 
 # returns the customer ID(from invoice dictionary)
@@ -72,7 +72,7 @@ def printInvoice(invObj):
         for row in invObj:
             qty = str(invObj[row]['Quantity'])
             product = invObj[row]['Beer Name']
-            total+=invObj[row]['Price']
+            total=total+invObj[row]['Price']*invObj[row]['Quantity']
             price = str(invObj[row]['Price'])
             invoice.write("{: <5} {: <31} {: <8}\n".format(qty,product,price))
         invoice.write("{: >44}\n".format('TOTAL:'))
