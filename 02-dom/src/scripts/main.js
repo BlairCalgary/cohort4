@@ -24,7 +24,7 @@ removeBtn.addEventListener('click', (() => {
     functions.removeLi();
 }));
 
-let i = 0;
+let cardIndex = 0;
 
 const buildNode = () => {
     // Create card div with title
@@ -33,7 +33,7 @@ const buildNode = () => {
     const span = document.createElement("span");
     node.appendChild(span);
     span.id = 'cardTitle';
-    span.textContent = `Card ${i}`;
+    span.textContent = `Card ${cardIndex}`;
     node.appendChild(document.createElement("br"));
     // Create beforeNode button node
     const beforeNode = document.createElement("button");
@@ -61,18 +61,18 @@ const onClick = (e) => {
     var parent = document.getElementById('leftPanel');
     switch (e.target.id) {
         case 'addAfter' :
-            i++;
+            cardIndex++;
             functions.addAfter(parent, buildNode(), e.target.parentNode);
             break;
         case 'deleteCard' :
             functions.deleteCard(parent, e.target.parentNode);
             break;
         case 'addBefore' :
-            i++;
+            cardIndex++;
             functions.addBefore(parent, buildNode(), e.target.parentNode);
             break;
         case 'addCard' :
-            i++;
+            cardIndex++;
             functions.addCard(parent, buildNode());
             break;
     }

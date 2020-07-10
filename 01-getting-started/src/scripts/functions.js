@@ -34,10 +34,10 @@ const functions = {
     },
 
     fedTaxes: (num1) => {
-        var brackets = [0,0,0,0,0],
+        const brackets = [0,0,0,0,0],
             taxLevels = [214368,150473,97069,48535,0],
-            taxRates = [.33,.29,.26,.205,.15],
-            index,
+            taxRates = [.33,.29,.26,.205,.15]
+        let index,
             taxes = 0;
         for (index = 0; index < brackets.length; ++index) {
             if (num1 > taxLevels[index]) {
@@ -46,7 +46,7 @@ const functions = {
                 taxes=taxes+brackets[index]*taxRates[index];
             }           
         };
-         return Math.round((taxes + Number.EPSILON) * 100) / 100;
+        return Math.round((taxes) * 100) / 100; // Add 2nd digit rounding
 
     },
     addNumToArray: (myArray, num1) => {
