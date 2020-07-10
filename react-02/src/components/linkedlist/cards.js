@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { LinkedList } from './index';
 import Jdenticon from 'react-jdenticon';
 import { ThemeContext } from '../theme/ThemeContext';
@@ -52,7 +52,7 @@ function Cards(props) {
     if (props.list.length > 0) {
         return (
             <ThemeContext.Consumer>{(context) => {
-                const { isLightTheme, light, dark, toggleTheme } = context;
+                const { isLightTheme, light, dark } = context;
                 const theme = isLightTheme ? light : dark;
 
                 return (

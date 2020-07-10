@@ -16,4 +16,4 @@ def templated_datadump():
     flaskDict = breakIntoDict()
     return render_template('templated.html', name=name, dict=flaskDict)
 
-app.run(port=5000)
+app.run(port=5001)

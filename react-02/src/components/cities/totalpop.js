@@ -12,7 +12,7 @@ function getPopulation(cities) {
 const TotalPop = ({ cities }) => {
     return (
         <ThemeContext.Consumer>{(context) => {
-            const { isLightTheme, light, dark, toggleTheme } = context;
+            const { isLightTheme, light, dark } = context;
             const theme = isLightTheme ? light : dark;
 
             return (

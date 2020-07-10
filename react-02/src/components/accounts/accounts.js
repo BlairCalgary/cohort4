@@ -14,11 +14,13 @@ class Accounts extends React.Component {
                 {
                     "name": "Chequing",
                     "balance": 25.00,
+                    "key": 0,
                 },
             ],
             error: '',
         }
-        this.errorMsg = this.errorMsg.bind(this)
+        this.errorMsg = this.errorMsg.bind(this);
+        this.counter = 0;
     }
     addAcct = (acct) => {
         const acctsClone = [...this.state.accounts];
@@ -26,8 +28,10 @@ class Accounts extends React.Component {
             this.errorMsg('Account balance cannot be negative.')
 
         } else {
-            acctsClone.push({ "name": acct.name, "balance": acct.balance })
+            this.counter++;
+            acctsClone.push({ "name": acct.name, "balance": acct.balance , "key": this.counter})
             this.setState({ accounts: acctsClone });
+            
         }
     }
     removeAcct = (acctName) => {
@@ -44,9 +48,10 @@ class Accounts extends React.Component {
             }
         }
     }
-    deposit = (account, amount) => {
+    deposit = (selectedIndex, amount) => {
         const acctsClone = [...this.state.accounts];
-        let index = acctsClone.findIndex(x => x.name === account);
+        selectedIndex = Number(selectedIndex)
+        let index = acctsClone.findIndex(x => x.key === selectedIndex);
         if (index < 0) {
             this.errorMsg('Select an account')
             return;
@@ -60,9 +65,10 @@ class Accounts extends React.Component {
             this.errorMsg('Enter a positive amount')
         }
     }
-    withdraw = (account, amount) => {
+    withdraw = (selectedIndex, amount) => {
         const acctsClone = [...this.state.accounts];
-        let index = acctsClone.findIndex(x => x.name === account);
+        selectedIndex = Number(selectedIndex)
+        let index = acctsClone.findIndex(x => x.key === selectedIndex);
         if (index < 0) {
             this.errorMsg('Select an account')
             return;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import previous from './previous.svg';
 import rewind from './rewind.svg';
 import skip from './skip.svg';
@@ -9,7 +9,7 @@ import { ThemeContext } from '../theme/ThemeContext';
 function CardSelection(props) {
     return (
         <ThemeContext.Consumer>{(context) => {
-            const { isLightTheme, light, dark, toggleTheme } = context;
+            const { isLightTheme, light, dark } = context;
             const theme = isLightTheme ? light : dark;
 
             return (

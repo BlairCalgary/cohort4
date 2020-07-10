@@ -19,19 +19,19 @@ function AccountList(props) {
     // console.log('accts in AccountList: '+ accts[0].name);
     return(
         <ThemeContext.Consumer>{(context) => {
-            const {isLightTheme,light,dark,toggleTheme} = context;
+            const {isLightTheme,light,dark} = context;
             const theme = isLightTheme ? light : dark;
             
             return(
                 <div className="divBox" style={{background: theme.bg}}>
                     <output id="account">Account Balances</output><br/>
                     {
-                        accts.map((acct, i) => {
+                        accts.map((acct) => {
                             return (
                                 <AccountBuild
-                                    key={i}
-                                    name={accts[i].name}
-                                    balance={accts[i].balance}
+                                    key={acct.key}
+                                    name={acct.name}
+                                    balance={acct.balance}
                                     click={props.removeAcct}
                                 />
                             );

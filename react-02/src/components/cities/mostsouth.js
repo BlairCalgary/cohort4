@@ -22,7 +22,7 @@ class MostSouth extends React.Component {
     render() {
         return (
             <ThemeContext.Consumer>{(context) => {
-                const { isLightTheme, light, dark, toggleTheme } = context;
+                const { isLightTheme, light, dark} = context;
                 const theme = isLightTheme ? light : dark;
 
                 return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ThemeTogglerButton from './theme-toggler-button';
 import About from './about';
 

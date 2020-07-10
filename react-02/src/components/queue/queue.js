@@ -15,10 +15,6 @@ function Queue() {
     const [deleted, setDeleted] = useState({});
     const [fifoActive, setFifoActive] = useState(true);
 
-    const toggle = () => {
-        setFifoActive(!fifoActive)
-    }
-
     const addItem = () => {
         if (fifoActive) {
             const temp = new Fifo();
@@ -43,7 +39,7 @@ function Queue() {
                 const temp = new Fifo();
                 temp.items = [...fifo.items];
                 temp.new = fifo.new;
-                var trashed = temp.dequeue();
+                let trashed = temp.dequeue();
                 setFifo(temp);
                 setDeleted(trashed);
             }
@@ -52,7 +48,7 @@ function Queue() {
                 const temp = new Lifo();
                 temp.items = [...lifo.items];
                 temp.new = lifo.new;
-                var trashed = temp.dequeue();
+                let trashed = temp.dequeue();
                 setLifo(temp);
                 setDeleted(trashed);
             }
@@ -72,7 +68,7 @@ function Queue() {
 
     return (
         <ThemeContext.Consumer>{(context) => {
-            const { isLightTheme, light, dark, toggleTheme } = context;
+            const { isLightTheme, light, dark } = context;
             const theme = isLightTheme ? light : dark;
 
 

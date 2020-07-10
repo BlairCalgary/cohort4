@@ -23,7 +23,6 @@ import apiLogo from './settings.svg';
 // import { themes, ThemeContext } from './components/theme/theme-context.js';
 
 import ThemeContextProvider from './components/theme/ThemeContext.js';
-import ThemeTogglerButton from './components/theme/theme-toggler-button.js';
 import Theme from './components/theme/theme.js'
 
 const iconsArr = [
@@ -169,14 +168,6 @@ class App extends Component {
       </div>
     );
   }
-}
-
-function Content() {
-  return (
-    <div>
-      <ThemeTogglerButton />
-    </div>
-  );
 }
 
 export default App;

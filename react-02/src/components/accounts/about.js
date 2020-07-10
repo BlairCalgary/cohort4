@@ -11,7 +11,8 @@ function aboutAlert() {
         "Future enchancements:\n"+
         "1. Create class for accounts that are pushed into controller.\n"+
         "2. Transfer funds between accounts.\n"+
-        "3. Multiple bank account holders.\n"
+        "3. Multiple bank account holders.\n"+
+        "4. rename selectedindex, rename 'key'. "
     )
 }
 

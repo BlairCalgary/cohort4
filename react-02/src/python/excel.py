@@ -1,17 +1,14 @@
 from openpyxl import load_workbook
-# from openpyxl.worksheet.datavalidation import DataValidation
-# from openpyxl.utils import quote_sheetname
 
-# def data_validation():
-#     wb = load_workbook('excel.xlsx')
-#     ws = wb['product']
-#     print(ws)
-#     dvDecimal = DataValidation(type="decimal")
-#     dvDecimal.add('C2:C10')
-#     ws.add_data_validation(dvDecimal)
-#     print(dvDecimal.error)
-
-# data_validation()
+# NOTES: 
+# data validation: ie. don't accept 'apples' as price
+# if price is missing, how is it dealt with?
+# what happens when an invoice doesn't contain valid line-items
+# what happens when price is empty
+# issue handling: what to do with missing data
+# issue handling: what to do with duplicate data
+# user input: don't accept strings
+# on errors/issues: inform user? delete data? ignore data?
 
 def breakIntoDict():
     wb = load_workbook('excel.xlsx')
@@ -27,7 +24,7 @@ def breakIntoDict():
                     builtDict[sheet][rowCount][wb[sheet][1][col].value] = cell.value
                     col += 1
             rowCount += 1
-    print(builtDict)
+    # print(builtDict)
     return builtDict
 
 # returns the customer ID(from invoice dictionary)

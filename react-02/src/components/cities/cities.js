@@ -22,17 +22,23 @@ class Cities extends React.Component {
         super();
         this.state = {
             cities: [],
+            serverStatus: [],
         }
-        // this.deleteIt.bind(this);
     }
     componentDidMount = async () => {
-        const citiesClone = [...this.state.cities];
-        const resp = await cityFetch.all();
-        for (const obj in resp) {
-            citiesClone.push(new City(resp[obj]))
-            // cities.createCity(new City(resp[obj]));
+        try {
+            const citiesClone = [...this.state.cities];
+            await cityFetch.load();
+            const resp = await cityFetch.all();
+            for (const obj in resp) {
+                citiesClone.push(new City(resp[obj]))
+                // cities.createCity(new City(resp[obj]));
+            }
+            this.setState({ cities: citiesClone });
+        } catch {
+            this.setState({serverStatus: [<p>Could not connect to server.</p>]})
         }
-        this.setState({ cities: citiesClone });
+        
     }
     deleteIt = (props) => {
         const City = props;
@@ -125,7 +131,7 @@ class Cities extends React.Component {
     render() {
         return (
             <ThemeContext.Consumer>{(context) => {
-                const { isLightTheme, light, dark, toggleTheme } = context;
+                const { isLightTheme, light, dark } = context;
                 const theme = isLightTheme ? light : dark;
 
 
@@ -152,6 +158,7 @@ class Cities extends React.Component {
                             </div>
                         </div>
                         <div>
+                            {this.state.serverStatus}
                             <About />
                         </div>
                     </div>

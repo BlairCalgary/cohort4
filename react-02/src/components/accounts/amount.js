@@ -3,16 +3,16 @@ import { ThemeContext } from '../theme/ThemeContext';
 
 function Options(props) {
     return (
-        <option>{props.name}</option>
+        <option value={props.value}>{props.name}</option>
     )
 }
 function Deposit(props) {
-
     return (
         <button
             id="depositBtn"
             className="btn"
-            onClick={() => props.deposit(props.select,props.input)}>
+            onClick={(e) => {
+                props.deposit(props.selectedIndex,props.input)}}>
                 Deposit
         </button>
     )
@@ -23,7 +23,7 @@ function Withdraw(props) {
         <button
             id="withdrawBtn"
             className="btn"
-            onClick={() => props.withdraw(props.select,props.input)}>
+            onClick={() => props.withdraw(props.selectedIndex,props.input)}>
                 Withdraw
         </button>
     )
@@ -33,12 +33,11 @@ function Withdraw(props) {
 
 function Amount (props) {
         const [ input , setInput ] = useState('');
-        const [ select, setSelect ] = useState('');
-        // console.log('this.accounts:'+props.accounts);
+        const [ selectedIndex, setSelectedIndex ] = useState('');
         const accts = props.accounts.slice();
         return(
             <ThemeContext.Consumer>{(context) => {
-                const {isLightTheme,light,dark,toggleTheme} = context;
+                const {isLightTheme,light,dark} = context;
                 const theme = isLightTheme ? light : dark;
                 
                 return(
@@ -46,22 +45,25 @@ function Amount (props) {
                 <span id="amount">Amount</span>
                 <input id="amtInput" type="number" onChange={e => setInput(e.target.value)}/><br/>
                 <output id="errMsg" className="error">{props.error}</output><br/>
-                <select onChange={(e) => setSelect(e.target.value)} defaultValue= "" id="accountList" name="accountList">
+                <select onChange={(e) => {
+                    setSelectedIndex(e.target.value);
+                    }} defaultValue="" id="accountList" name="accountList">
                 <option>Please select</option>
                 {
-                    accts.map((acct, i) => {
+                    accts.map((acct) => {
                         return (
                             <Options
-                                key={i}
-                                name={accts[i].name}
+                                value={acct.key}
+                                key={acct.key}
+                                name={acct.name}
                                 // click={props.removeAcct}
                             />
                         );
                     })
                 }
                 </select><br/>
-                <Deposit select={select} deposit={props.deposit} input={input}/>
-                <Withdraw select={select} withdraw={props.withdraw} input={input}/>
+                <Deposit selectedIndex={selectedIndex} deposit={props.deposit} input={input}/>
+                <Withdraw selectedIndex={selectedIndex} withdraw={props.withdraw} input={input}/>
                 
                 
             </div>

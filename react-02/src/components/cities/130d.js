@@ -13,7 +13,14 @@ export class City {
         this.latitude = latitude;
         this.longitude = longitude;
         this.population = population;
-        this.key = key
+        this.key = key;
+        if (this.latitude > 0) {
+            this.sphere = 'Northern';
+        } else if (this.latitude < 0) {
+            this.sphere = 'Southern';
+        } else {
+            this.sphere = 'Equator';
+        }
     }
     show() {
         return this.name +
@@ -48,13 +55,7 @@ export class City {
                 return 'Hamlet';
         }
     }
-    whichSphere() {
-        if (this.latitude > 0) {
-            return 'N';
-        } else {
-            return 'S';
-        }
-    }
+
 }
 
 export class Controller {
@@ -209,79 +210,3 @@ export class CityFetch {
 
 }
 
-//, CLEAR 
-
-// export async function postData(url, data) {
-//     // console.log('in postData');
-//     // Default options are marked with *
-//     const response = await fetch(url, {
-//         method: 'POST',     // *GET, POST, PUT, DELETE, etc.
-//         mode: 'cors',       // no-cors, *cors, same-origin
-//         cache: 'no-cache',  // *default, no-cache, reload, force-cache, only-if-cached
-//         credentials: 'same-origin', // include, *same-origin, omit
-//         headers: {
-//             'Content-Type': 'application/json'
-//             // 'Content-Type': 'application/x-www-form-urlencoded',
-//         },
-//         redirect: 'follow',         // manual, *follow, error
-//         referrer: 'no-referrer',    // no-referrer, *client
-//         body: JSON.stringify(data)  // body data type must match "Content-Type" header
-//     });
-//     return await response.json();   // parses JSON response into native JavaScript objects
-// };
-
-// const data = {
-//     "key":"1",
-//     "name":"Calgary",
-//     "latitude":"51.03",
-//     "longitude":"-114.37",
-//     "population":"1285711"
-// }
-
-// const yk = {
-//     "key":"2",
-//     "name":"Yellowknife",
-//     "latitude":"62.47",
-//     "longitude":"-114.54",
-//     "population":"19569"
-// }
-
-// const slc = {
-//     "key":"3",
-//     "name":"Salt Lake City",
-//     "latitude":"40.78",
-//     "longitude":"-112.06",
-//     "population":"200544"
-// }
-
-// const merida = {
-//     "key":"4",
-//     "name":"Mérida",
-//     "latitude":"20.98",
-//     "longitude":"-89.77",
-//     "population":"892363"
-// }
-
-// const bogota = {
-//     "key":"5",
-//     "name":"Bogota",
-//     "latitude":"4.65",
-//     "longitude":"-74.25",
-//     "population":"7413000"
-// }
-
-// const ba = {
-//     "key":"6",
-//     "name":"Buenos Aires",
-//     "latitude":"-34.62",
-//     "longitude":"-58.58",
-//     "population":"2890000"
-// }
-
-// const warsaw = {
-//     "key":"7",
-//     "name":"Warsaw",
-//     "latitude":"52.23",
-//     "longitude":"20.78",
-//     "population":"1708000"
-// }

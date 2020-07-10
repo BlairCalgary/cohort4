@@ -22,44 +22,39 @@ class AddACity extends React.Component {
         clone.longitude = document.querySelector(`[name="cityLong"]`).value;
         clone.population = document.querySelector(`[name="cityPop"]`).value;
 
-        var cityExists = false;
+        let allConditionsMet = true;
+        let errorMsg;
+        
         for (let p = 0; p < cloneCities.length; p++) {
             if (cloneCities[p].name === clone.name) {
-                cityExists = true;
+                allConditionsMet = false;
+                errorMsg = 'City already exists.';
+                break;
             }
         }
+        if (allConditionsMet && Math.abs(Number(document.querySelector(`[name="cityLat"]`).value)) > 90) {
+            allConditionsMet = false;
+            errorMsg = 'Latitude must be between -90 and 90 (inclusive).';
+        }
+        if (allConditionsMet && Math.abs(Number(document.querySelector(`[name="cityLong"]`).value)) > 180) {
+            allConditionsMet = false;
+            errorMsg = 'Longitude must be between 180 and -180 (inclusive).';
+        }
+        if (allConditionsMet && !clone.name) {
+            allConditionsMet = false;
+            errorMsg = 'City name cannot be blank.';
+        }
+
         // console.log('does city exist?: ', cloneCities.find(el => el === clone.name))
         // console.log('city Search: ', clone.name);
 
 
-        try {
-            if (!clone.name) {
-                const el = document.querySelector(`[name="cityName"]`);
-                el.focus();
-                el.select();
-                window.alert('City name cannot be blank.');
-                throw new Error('City Name cannot be blank.');
-            }
-            if (cityExists) {
-                const el = document.querySelector(`[name="cityName"]`);
-                el.focus();
-                el.select();
-                window.alert('City already exists.');
-                throw new Error('City already exists.');
-            }
-            if (!clone.latitude) { clone.latitude = "0" };
-            if (!clone.longitude) { clone.longitude = "0" };
+        if (allConditionsMet) {
             if (!clone.population) { clone.population = "0" };
             this.props.addCity(clone);
-            document.querySelector(`[name="cityName"]`).value = '';
-            document.querySelector(`[name="cityLat"]`).value = '';
-            document.querySelector(`[name="cityLong"]`).value = '';
-            document.querySelector(`[name="cityPop"]`).value = '';
-        } catch (e) {
-
+        } else {
+            alert(errorMsg);
         }
-
-
 
     }
     async componentDidMount() {
@@ -123,7 +118,7 @@ class AddACity extends React.Component {
     render() {
         return (
             <ThemeContext.Consumer>{(context) => {
-                const { isLightTheme, light, dark, toggleTheme } = context;
+                const { isLightTheme, light, dark } = context;
                 const theme = isLightTheme ? light : dark;
                 return (
                     <div id="addCityDiv" className="divBox" style={{ background: theme.bg }}>

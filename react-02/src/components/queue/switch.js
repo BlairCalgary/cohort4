@@ -1,5 +1,4 @@
-import React, {useState,useEffect} from 'react';
-import { findByLabelText } from '@testing-library/react';
+import React, {useState} from 'react';
 
 function Switch(props) {
     const [ fifo, setFifo ] = useState('q-switchActive');

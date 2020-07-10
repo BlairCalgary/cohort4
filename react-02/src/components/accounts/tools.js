@@ -49,7 +49,6 @@ function AcctMinOutput(props) {
 }
 
 function Tools(props) {
-    console.log(props.accounts[0].name);
     return (
         <ThemeContext.Consumer>{(context) => {
             const { isLightTheme, light, dark } = context;

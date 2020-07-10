@@ -73,7 +73,7 @@ class LinkedList {
     }
     // shift = remove head node from the linked list
     shift(){
-        if(!this.head) return undefined;
+        if(!this.head) return;
         let temp = this.head;
         if(this.length === 1) {
             this.total-=Number(temp.str);
@@ -94,9 +94,9 @@ class LinkedList {
         this.length--;
     }
     next() {
-        if(!this.active) return undefined;
+        if(!this.active) return;
         if (this.length===1) {
-            return undefined;
+            return;
         } else {
             if (this.active!==this.tail) {
                 this.active=this.active.next;
