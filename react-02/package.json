@@ -7,9 +7,11 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "jdenticon": "^2.2.0",
+    "json-to-table": "^4.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-jdenticon": "0.0.8",
+    "react-json-table": "^0.1.1",
     "react-scripts": "3.4.1",
     "react-svgmt": "^1.1.11"
   },

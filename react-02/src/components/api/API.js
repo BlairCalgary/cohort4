@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import jsonTable from './table.js'
 
 function API() {
     const [display, setDisplay] = useState([])
+    const [outputRender, setOutputRender] = useState([])
+
+
     const loadFromAws = async () => {
         const url = 'https://eamiq48yy0.execute-api.ca-central-1.amazonaws.com/dev/customer'
         const data = await fetch(url)
@@ -18,6 +22,8 @@ function API() {
             renderOut.push(<p key={counter}>===</p>)
         });
         setDisplay(renderOut);
+        const myTable = jsonTable(output)
+        console.log('table format:', myTable)
     }
     const loadJSON = async () => {
         const url = 'http://127.0.0.1:5001/datadump'
@@ -61,6 +67,7 @@ function API() {
             <button onClick={() => loadJSON()}>Load JSON data from flask API</button><br/>
             <button onClick={() => loadFromAws()}>Send GET request to AWS serverless API</button>
             {display}
+            
         </div>
     )
 }
